@@ -1,0 +1,86 @@
+{
+    "poppins": {
+        "300": "C:\\laragon\\www\\battery_new\\public\\assets\/fonts\/poppins_300_71a46324c5def983e80884621dcd061b",
+        "normal": "C:\\laragon\\www\\battery_new\\public\\assets\/fonts\/poppins_normal_12f61e1aca2bd22472c17cf0465b304e",
+        "500": "C:\\laragon\\www\\battery_new\\public\\assets\/fonts\/poppins_500_eaa67a2dcd54166f62e0cc3adc7e1b71",
+        "600": "poppins_600_a68d0fa714114c7ef3a2a04bbe8fda45",
+        "bold": "C:\\laragon\\www\\battery_new\\public\\assets\/fonts\/poppins_bold_dd0c9eff9089b312c7d5e9a1f45059a4"
+    },
+    "public sans": {
+        "300": "C:\\laragon\\www\\battery_new\\public\\assets\/fonts\/public_sans_300_e40291a1efaf35fadfb14addce7ab6fe",
+        "normal": "C:\\laragon\\www\\battery_new\\public\\assets\/fonts\/public_sans_normal_541b23c84069f88f13682c4de16653d2",
+        "500": "C:\\laragon\\www\\battery_new\\public\\assets\/fonts\/public_sans_500_409c652e5ddfb16fe604a2796364a682",
+        "600": "public_sans_600_f7b0486ca002dc2d2bb6210c153daef1",
+        "bold": "C:\\laragon\\www\\battery_new\\public\\assets\/fonts\/public_sans_bold_afade0e905cec59574bdb032b78d1a35"
+    },
+    "nunito": {
+        "300": "C:\\laragon\\www\\battery_new\\public\\assets\/fonts\/nunito_300_ed16c859231e9de60529ee8e2539295f",
+        "normal": "C:\\laragon\\www\\battery_new\\public\\assets\/fonts\/nunito_normal_ee99570c2d40db4ca7cb27ecfa07bd0e",
+        "500": "C:\\laragon\\www\\battery_new\\public\\assets\/fonts\/nunito_500_1337283c03afe8faf9193502488bd31d",
+        "600": "nunito_600_462968132f9bb0b300c9ac89cb99aa5d",
+        "bold": "C:\\laragon\\www\\battery_new\\public\\assets\/fonts\/nunito_bold_8878d120ae1cf02db589138e103b16c4"
+    },
+    "saira": {
+        "300": "C:\\laragon\\www\\battery_new\\public\\assets\/fonts\/saira_300_16eaaae6e9df5e723f4abbc9426f25db",
+        "normal": "C:\\laragon\\www\\battery_new\\public\\assets\/fonts\/saira_normal_7d3a866fd79c421184c64a284fb4276a",
+        "500": "C:\\laragon\\www\\battery_new\\public\\assets\/fonts\/saira_500_da2d930ed2085f23b985118eae1b3370",
+        "600": "C:\\laragon\\www\\battery_new\\public\\assets\/fonts\/saira_600_7c31c85d4b32e3651509fcb244d85b4c",
+        "bold": "saira_bold_3a305230226881a8861f8cd657d874d0"
+    },
+    "outfit": {
+        "300": "C:\\laragon\\www\\battery_new\\public\\assets\/fonts\/outfit_300_aa7bbb813abdd624f7711842f96c48a7",
+        "normal": "C:\\laragon\\www\\battery_new\\public\\assets\/fonts\/outfit_normal_4c4beae9ee8ba86b6b3544a4ae9583a2",
+        "500": "C:\\laragon\\www\\battery_new\\public\\assets\/fonts\/outfit_500_9c7b15f5835e846e37fc472d14e10339",
+        "600": "C:\\laragon\\www\\battery_new\\public\\assets\/fonts\/outfit_600_45476b029db8737f6b73d8f1bd1272b8",
+        "bold": "outfit_bold_6ccba8ca533806e6a09b21b5090092f7"
+    },
+    "inter": {
+        "normal": "C:\\laragon\\www\\battery_new\\public\\assets\/fonts\/inter_normal_4f95092608a03c140dccd33606c19f31",
+        "500": "C:\\laragon\\www\\battery_new\\public\\assets\/fonts\/inter_500_3f435dc727a887d3a9c0ddd0afecf691",
+        "600": "C:\\laragon\\www\\battery_new\\public\\assets\/fonts\/inter_600_9bfe13c942a9c8fb0ff92d25ab822ed4",
+        "bold": "inter_bold_8e796d6a87340143ae66c4104836364f"
+    },
+    "open sans": {
+        "300": "C:\\laragon\\www\\battery_new\\public\\assets\/fonts\/open_sans_300_8513b9024ad211a10e857eba11f0f357",
+        "normal": "C:\\laragon\\www\\battery_new\\public\\assets\/fonts\/open_sans_normal_2bf6e8a03908d49a7fa7b1094b0c2804",
+        "500": "C:\\laragon\\www\\battery_new\\public\\assets\/fonts\/open_sans_500_663f11545dfeea65b44b2da12b5a66b1",
+        "600": "C:\\laragon\\www\\battery_new\\public\\assets\/fonts\/open_sans_600_94288badef373364367fbfb769e688ce",
+        "bold": "open_sans_bold_0e7196744e416eea97ecd5b9781a44c2"
+    },
+    "ibm plex sans": {
+        "300": "C:\\laragon\\www\\battery_new\\public\\assets\/fonts\/ibm_plex_sans_300_44b77c8e0375fd180861cbf95855034e",
+        "normal": "C:\\laragon\\www\\battery_new\\public\\assets\/fonts\/ibm_plex_sans_normal_ac1df46b23f289e1f59dc967f7ff440d",
+        "500": "C:\\laragon\\www\\battery_new\\public\\assets\/fonts\/ibm_plex_sans_500_5a2eb9d7b3a561881470319ebdaca438",
+        "600": "C:\\laragon\\www\\battery_new\\public\\assets\/fonts\/ibm_plex_sans_600_638383cc0d39856ff4266265237e21e6",
+        "bold": "ibm_plex_sans_bold_9acc3826c44541930c66ccf90977b753"
+    },
+    "montserrat": {
+        "normal": "C:\\laragon\\www\\battery_new\\public\\assets\/fonts\/montserrat_normal_8b39ce6f1e92b671adb8930c94175e08",
+        "500": "C:\\laragon\\www\\battery_new\\public\\assets\/fonts\/montserrat_500_b8456ccdc8e65e0603c780e706bb4c7b",
+        "600": "C:\\laragon\\www\\battery_new\\public\\assets\/fonts\/montserrat_600_4a32dc2378b50649c05087a84ee6c5f6",
+        "bold": "montserrat_bold_d6f7b66b1ae15f51f1e1cecb60246712"
+    },
+    "rubik": {
+        "300": "C:\\laragon\\www\\battery_new\\public\\assets\/fonts\/rubik_300_82a112de692d08b55c2b11842e5a67fc",
+        "normal": "C:\\laragon\\www\\battery_new\\public\\assets\/fonts\/rubik_normal_b6ec54c36a02fb811d72194115ec42db",
+        "500": "C:\\laragon\\www\\battery_new\\public\\assets\/fonts\/rubik_500_c5ab0af2d954c4140f26e728dad090b3",
+        "600": "C:\\laragon\\www\\battery_new\\public\\assets\/fonts\/rubik_600_5d61a1f1e601158e12a385b1e07b6a27",
+        "bold": "rubik_bold_98a50ec8225be60b521143fc843a3c06"
+    },
+    "jost": {
+        "300": "C:\\laragon\\www\\battery_new\\public\\assets\/fonts\/jost_300_7478c057849c61462d94379aa5a558f5",
+        "normal": "C:\\laragon\\www\\battery_new\\public\\assets\/fonts\/jost_normal_aef524d136c3a23f433c46e7508982f2",
+        "500": "C:\\laragon\\www\\battery_new\\public\\assets\/fonts\/jost_500_250538118daecbf8b86ffa79c62a0839",
+        "600": "C:\\laragon\\www\\battery_new\\public\\assets\/fonts\/jost_600_019fbbbb0de25d6a87e091f71936cbfa",
+        "bold": "jost_bold_414ec82b41b0f3532ec4a0dfa41b0f17"
+    },
+    "roboto": {
+        "300": "C:\\laragon\\www\\battery_new\\public\\assets\/fonts\/roboto_300_7f0f040993bb35f67d8431439cbf7385",
+        "normal": "C:\\laragon\\www\\battery_new\\public\\assets\/fonts\/roboto_normal_744a525d3dfcb8e50d148956703b6b68",
+        "500": "C:\\laragon\\www\\battery_new\\public\\assets\/fonts\/roboto_500_41ea8fd5770bc278dbd15851922ff806",
+        "bold": "roboto_bold_8c645f7f06cc7058298670914de0e599"
+    },
+    "noto nastaliq urdu": {
+        "normal": "noto_nastaliq_urdu_normal_aa6ef28bec373132daedf34dc7f62238"
+    }
+}

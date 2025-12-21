@@ -1,0 +1,2 @@
+<?php
+ namespace App\Http\Controllers; use App\Http\Controllers\Controller; use App\Models\products; use Illuminate\Http\Request; class stockReportController extends Controller { public function index() { $products = products::all(); foreach ($products as $product) { $product->stock = getStock($product->id); $product->value = productStockValue($product->id); } return view("\162\x65\160\157\x72\164\x73\x2e\163\x74\x6f\x63\153\137\162\145\x70\x6f\162\x74\x2e\x64\145\x74\x61\x69\154\x73", compact("\x70\162\157\x64\165\143\164\163")); } }
