@@ -88,7 +88,7 @@ return [
     'locale' => env('APP_LOCALE', 'en'),
 
     'domains' => [
-        'battery_new.test',
+        'express_battery.test',
         'yaseen-s.test',
         'quettamart.diamondquetta.com',
         'testyaseen.diamondquetta.com',
@@ -104,8 +104,8 @@ return [
 
     'files' =>
     [
-        '275257',
-        '275257'
+        '488179',
+        '488179'
     ],
 
     /*
