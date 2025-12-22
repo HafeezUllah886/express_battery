@@ -101,6 +101,8 @@
                                         <th width="20%">Product</th>
                                         <th class="text-center">Warehouse</th>
                                         <th class="text-center">Qty</th>
+                                        <th class="text-center">Retail</th>
+                                        <th class="text-center">Percentage</th>
                                         <th class="text-center">Price</th>
                                         <th class="text-center">Amount</th>
                                         <th></th>
@@ -132,6 +134,16 @@
                                                             class="form-control text-center no-padding"
                                                             id="qty_{{ $id }}"></div>
                                                 </td>
+                                                <td class="no-padding"><input type="number" name="retail[]" required
+                                                        step="any" value="{{ $product->retail }}" min="0"
+                                                        class="form-control text-center no-padding"
+                                                        oninput="updateChanges({{ $id }})"
+                                                        id="retail_{{ $id }}"></td>
+                                                <td class="no-padding"><input type="number" name="percentage[]" required
+                                                        step="any" value="{{ $product->percentage }}" min="0"
+                                                        class="form-control text-center no-padding"
+                                                        oninput="updateChanges({{ $id }})"
+                                                        id="percentage_{{ $id }}"></td>
                                                 <td class="no-padding"><input type="number" name="price[]" required
                                                         step="any" value="{{ $product->price }}" min="0"
                                                         class="form-control text-center no-padding"
@@ -150,7 +162,7 @@
                                     </tbody>
                                     <tfoot>
                                         <tr>
-                                            <th colspan="3" class="text-end">Total</th>
+                                            <th colspan="6" class="text-end">Total</th>
                                             <th class="text-end" id="totalAmount">0.00</th>
                                         </tr>
                                     </tfoot>
@@ -315,6 +327,15 @@
                             ')" min="0" required step="any" value="1" class="form-control text-center no-padding" id="qty_' +
                             id + '"></div></td>';
                         html +=
+                            '<td class="no-padding"><input type="number" name="retail[]" oninput="updateChanges(' +
+                            id + ')" required step="any" value="' + product.price +
+                            '" min="1" class="form-control text-center" id="retail_' + id + '"></td>';
+                        html +=
+                            '<td class="no-padding"><input type="number" name="percentage[]" oninput="updateChanges(' +
+                            id +
+                            ')" required step="any" value="0" min="1" class="form-control text-center" id="percentage_' +
+                            id + '"></td>';
+                        html +=
                             '<td class="no-padding"><input type="number" name="price[]" oninput="updateChanges(' +
                             id + ')" required step="any" value="' + product.price +
                             '" min="1" class="form-control text-center" id="price_' + id + '"></td>';
@@ -335,14 +356,17 @@
         }
 
         function updateChanges(id) {
-            var price = $('#price_' + id).val();
+            var retail = $('#retail_' + id).val();
+            var percentage = $('#percentage_' + id).val();
             var stock = $('#stock_' + id).val();
+            var value = retail - (retail * percentage / 100);
             $("#qty_" + id).attr("max", stock);
             var qty = $('#qty_' + id).val();
 
-            var amount = price * qty;
+            var amount = value * qty;
 
             $("#amount_" + id).val(amount);
+            $("#price_" + id).val(value);
 
             updateTotal();
         }

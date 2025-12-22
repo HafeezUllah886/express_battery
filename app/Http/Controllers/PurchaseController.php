@@ -85,7 +85,8 @@ class PurchaseController extends Controller
                 {
                 $qty = $request->qty[$key];
                 $pprice = $request->pprice[$key];
-                $price = $request->price[$key];
+                $retail = $request->retail[$key];
+                $percentage = $request->percentage[$key];
                 $amount = $pprice * $qty;
                 $total += $amount;
 
@@ -93,8 +94,9 @@ class PurchaseController extends Controller
                     [
                         'purchaseID'    => $purchase->id,
                         'productID'     => $id,
+                        'retail'        => $retail,
+                        'percentage'    => $percentage,
                         'pprice'        => $pprice,
-                        'price'         => $price,
                         'qty'           => $qty,
                         'amount'        => $amount,
                         'date'          => $request->date,
@@ -246,9 +248,10 @@ class PurchaseController extends Controller
             {
                 if($request->qty[$key] > 0)
                 {
-                    $qty = $request->qty[$key];
+                   $qty = $request->qty[$key];
                 $pprice = $request->pprice[$key];
-                $price = $request->price[$key];
+                $retail = $request->retail[$key];
+                $percentage = $request->percentage[$key];
                 $amount = $pprice * $qty;
                 $total += $amount;
 
@@ -257,7 +260,8 @@ class PurchaseController extends Controller
                         'purchaseID'    => $purchase->id,
                         'productID'     => $id,
                         'pprice'        => $pprice,
-                        'price'         => $price,
+                        'retail'        => $retail,
+                        'percentage'    => $percentage,
                         'qty'           => $qty,
                         'amount'        => $amount,
                         'date'          => $request->date,

@@ -7,18 +7,20 @@
                     <div class="col-md-5">
                         <div class="input-group mb-3">
                             <span class="input-group-text" id="basic-addon1">From</span>
-                            <input type="date" class="form-control" placeholder="Username" name="start" value="{{$start}}" aria-label="Username" aria-describedby="basic-addon1">
+                            <input type="date" class="form-control" placeholder="Username" name="start"
+                                value="{{ $start }}" aria-label="Username" aria-describedby="basic-addon1">
                         </div>
                     </div>
                     <div class="col-md-5">
                         <div class="input-group mb-3">
                             <span class="input-group-text" id="basic-addon1">To</span>
-                            <input type="date" class="form-control" placeholder="Username" name="end" value="{{$end}}" aria-label="Username" aria-describedby="basic-addon1">
+                            <input type="date" class="form-control" placeholder="Username" name="end"
+                                value="{{ $end }}" aria-label="Username" aria-describedby="basic-addon1">
                         </div>
                     </div>
-                   
+
                     <div class="col-md-2">
-                       <input type="submit" value="Filter" class="btn btn-success w-100">
+                        <input type="submit" value="Filter" class="btn btn-success w-100">
                     </div>
                 </div>
             </form>
@@ -57,7 +59,8 @@
                                 <tr>
                                     <td>{{ $key + 1 }}</td>
                                     <td>{{ $sale->id }}</td>
-                                    <td>{{ $sale->customerID != 2 ? $sale->customer->title : $sale->customerName . '(Walk-in)' }}</td>
+                                    <td>{{ $sale->customerID != 2 ? $sale->customer->title : $sale->customerName . '(Walk-in)' }}
+                                    </td>
                                     <td>{{ date('d M Y', strtotime($sale->date)) }}</td>
                                     <td>{{ number_format($amount) }}</td>
 
@@ -69,33 +72,36 @@
                                             </button>
                                             <ul class="dropdown-menu dropdown-menu-end">
                                                 <li>
-                                                    <button class="dropdown-item" onclick="newWindow('{{route('sale.show', $sale->id)}}')"
+                                                    <button class="dropdown-item"
+                                                        onclick="newWindow('{{ route('sale.show', $sale->id) }}')"
                                                         onclick=""><i
                                                             class="ri-eye-fill align-bottom me-2 text-muted"></i>
                                                         View
                                                     </button>
                                                 </li>
-                                                <li>
+                                                {{--  <li>
                                                     <button class="dropdown-item" onclick="newWindow('{{route('pos.print', $sale->id)}}')"
                                                         onclick=""><i
                                                             class="ri-eye-fill align-bottom me-2 text-muted"></i>
                                                         Print
                                                     </button>
-                                                </li>
+                                                </li> --}}
                                                 <li>
-                                                    <a class="dropdown-item" onclick="newWindow('{{route('sale.edit', $sale->id)}}')">
+                                                    <a class="dropdown-item"
+                                                        onclick="newWindow('{{ route('sale.edit', $sale->id) }}')">
                                                         <i class="ri-pencil-fill align-bottom me-2 text-muted"></i>
                                                         Edit
                                                     </a>
                                                 </li>
-                                               {{--  <li>
+                                                {{--  <li>
                                                     <a class="dropdown-item" onclick="newWindow('{{route('salePayment.index', $sale->id)}}')">
                                                         <i class="ri-money-dollar-circle-fill align-bottom me-2 text-muted"></i>
                                                         Payments
                                                     </a>
                                                 </li> --}}
                                                 <li>
-                                                    <a class="dropdown-item text-danger" href="{{route('sale.delete', $sale->id)}}">
+                                                    <a class="dropdown-item text-danger"
+                                                        href="{{ route('sale.delete', $sale->id) }}">
                                                         <i class="ri-delete-bin-2-fill align-bottom me-2 text-danger"></i>
                                                         Delete
                                                     </a>
@@ -108,32 +114,31 @@
                         </tbody>
                     </table>
                 </div>
-                
+
             </div>
         </div>
     </div>
     <!-- Default Modals -->
-    
+
 @endsection
 
 @section('page-css')
-<link rel="stylesheet" href="{{ asset('assets/libs/datatable/datatable.bootstrap5.min.css') }}" />
-<!--datatable responsive css-->
-<link rel="stylesheet" href="{{ asset('assets/libs/datatable/responsive.bootstrap.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/libs/datatable/datatable.bootstrap5.min.css') }}" />
+    <!--datatable responsive css-->
+    <link rel="stylesheet" href="{{ asset('assets/libs/datatable/responsive.bootstrap.min.css') }}" />
 
-<link rel="stylesheet" href="{{ asset('assets/libs/datatable/buttons.dataTables.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/libs/datatable/buttons.dataTables.min.css') }}">
 @endsection
 @section('page-js')
-    <script src="{{ asset('assets/libs/datatable/jquery.dataTables.min.js')}}"></script>
-    <script src="{{ asset('assets/libs/datatable/dataTables.bootstrap5.min.js')}}"></script>
-    <script src="{{ asset('assets/libs/datatable/dataTables.responsive.min.js')}}"></script>
-    <script src="{{ asset('assets/libs/datatable/dataTables.buttons.min.js')}}"></script>
-    <script src="{{ asset('assets/libs/datatable/buttons.print.min.js')}}"></script>
-    <script src="{{ asset('assets/libs/datatable/buttons.html5.min.js')}}"></script>
-    <script src="{{ asset('assets/libs/datatable/vfs_fonts.js')}}"></script>
-    <script src="{{ asset('assets/libs/datatable/pdfmake.min.js')}}"></script>
-    <script src="{{ asset('assets/libs/datatable/jszip.min.js')}}"></script>
+    <script src="{{ asset('assets/libs/datatable/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('assets/libs/datatable/dataTables.bootstrap5.min.js') }}"></script>
+    <script src="{{ asset('assets/libs/datatable/dataTables.responsive.min.js') }}"></script>
+    <script src="{{ asset('assets/libs/datatable/dataTables.buttons.min.js') }}"></script>
+    <script src="{{ asset('assets/libs/datatable/buttons.print.min.js') }}"></script>
+    <script src="{{ asset('assets/libs/datatable/buttons.html5.min.js') }}"></script>
+    <script src="{{ asset('assets/libs/datatable/vfs_fonts.js') }}"></script>
+    <script src="{{ asset('assets/libs/datatable/pdfmake.min.js') }}"></script>
+    <script src="{{ asset('assets/libs/datatable/jszip.min.js') }}"></script>
 
     <script src="{{ asset('assets/js/pages/datatables.init.js') }}"></script>
 @endsection
-

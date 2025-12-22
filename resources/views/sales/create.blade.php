@@ -82,6 +82,8 @@
                                         <th width="20%">Product</th>
                                         <th class="text-center">Warehouse</th>
                                         <th class="text-center">Qty</th>
+                                        <th class="text-center">Retail</th>
+                                        <th class="text-center">Percentage</th>
                                         <th class="text-center">Price</th>
                                         <th class="text-center">Amount</th>
                                         <th></th>
@@ -91,6 +93,8 @@
                                         <tr>
                                             <th colspan="2" class="text-end">Total</th>
                                             <th class="text-end" id="totalQty">0.00</th>
+                                            <th></th>
+                                            <th></th>
                                             <th></th>
                                             <th class="text-end" id="totalAmount">0.00</th>
                                         </tr>
@@ -305,6 +309,17 @@
                             ')" min="0" required step="any" value="1" class="form-control text-center no-padding" id="qty_' +
                             id + '"></div></td>';
                         html +=
+                            '<td class="no-padding"><input type="number" name="retail[]" oninput="updateChanges(' +
+                            id + ')" step="any" value="' + product.price +
+                            '" min="1" class="form-control text-center no-padding" id="retail_' + id +
+                            '"></td>';
+                        html +=
+                            '<td class="no-padding"><input type="number" name="percentage[]" oninput="updateChanges(' +
+                            id +
+                            ')" step="any" value="0" min="0" class="form-control text-center no-padding" id="percentage_' +
+                            id +
+                            '"></td>';
+                        html +=
                             '<td class="no-padding"><input type="number" name="price[]" oninput="updateChanges(' +
                             id + ')" step="any" value="' + product.price +
                             '" min="1" class="form-control text-center no-padding" id="price_' + id + '"></td>';
@@ -327,13 +342,16 @@
 
         function updateChanges(id) {
 
-            var price = $('#price_' + id).val();
+            var retail = $('#retail_' + id).val();
+            var percentage = $('#percentage_' + id).val();
             var stock = $('#stock_' + id).val();
+            var value = retail - (retail * percentage / 100);
             $("#stockValue_" + id).text(stock);
             $("#qty_" + id).attr("max", stock);
             var qty = $('#qty_' + id).val();
+            $('#price_' + id).val(value);
 
-            var amount = price * qty;
+            var amount = value * qty;
 
             $("#amount_" + id).val(amount);
 
@@ -458,7 +476,7 @@
                             response($.map(data.products, function(item) {
                                 return {
                                     label: item
-                                    .text, // This will display Urdu or English product name
+                                        .text, // This will display Urdu or English product name
                                     value: item
                                         .value // Unique product ID (can also return the name if you want)
                                 };

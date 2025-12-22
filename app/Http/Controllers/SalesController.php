@@ -107,6 +107,8 @@ class SalesController extends Controller
                 {
                 $qty = $request->qty[$key];
                 $price = $request->price[$key];
+                $retail = $request->retail[$key];
+                $percentage = $request->percentage[$key];
                 $total += $request->amount[$key];
 
                 sale_details::create(
@@ -114,6 +116,8 @@ class SalesController extends Controller
                         'salesID'       => $sale->id,
                         'productID'     => $id,
                         'price'         => $price,
+                        'retail'        => $retail,
+                        'percentage'    => $percentage,
                         'warehouseID'   => $request->warehouse[$key], 
                         'qty'           => $qty,
                         'amount'        => $request->amount[$key],
@@ -323,12 +327,16 @@ class SalesController extends Controller
                 {
                     $qty = $request->qty[$key];
                 $price = $request->price[$key];
+                $retail = $request->retail[$key];
+                $percentage = $request->percentage[$key];
                 $total += $request->amount[$key];
                 sale_details::create(
                     [
                         'salesID'       => $sale->id,
                         'productID'     => $id,
                         'price'         => $price,
+                        'retail'        => $retail,
+                        'percentage'    => $percentage,
                         'warehouseID'   => $request->warehouse[$key],
                         'qty'           => $qty,
                         'amount'        => $request->amount[$key],

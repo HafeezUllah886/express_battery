@@ -16,8 +16,9 @@ return new class extends Migration
             $table->foreignId('purchaseID')->constrained('purchases', 'id');
             $table->foreignId('productID')->constrained('products', 'id');
             $table->foreignId('warehouseID')->constrained('warehouses', 'id'); 
+            $table->float('retail', 10);
+            $table->float('percentage', 10);
             $table->float('pprice', 10);
-            $table->float('price', 10);
             $table->float('qty');
             $table->float('amount');
             $table->date('date');
