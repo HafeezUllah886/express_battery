@@ -27,7 +27,7 @@
                             <th>Category</th>
                             {{--   <th>Purchase Price</th> --}}
                             <th>Retail Sale</th>
-                            <th>Default</th>
+                            <th>Sale Percentage</th>
                             <th>Action</th>
                         </thead>
                         <tbody>
@@ -39,7 +39,7 @@
                                     <td>{{ $item->category->name }}</td>
                                     {{--  <td>{{ number_format($item->pprice, 2) }}</td> --}}
                                     <td>{{ number_format($item->price, 2) }}</td>
-                                    <td>{{ $item->isDefault }}</td>
+                                    <td>{{ $item->percentage }}</td>
                                     <td>
                                         <button type="button" class="btn btn-info " data-bs-toggle="modal"
                                             data-bs-target="#edit_{{ $item->id }}">Edit</button>
@@ -100,6 +100,12 @@
                                                         <label for="price">Retail Price</label>
                                                         <input type="number" step="any" name="price" required
                                                             value="{{ $item->price }}" min="0" id="price"
+                                                            class="form-control">
+                                                    </div>
+                                                    <div class="form-group mt-2">
+                                                        <label for="percentage">Sale Percentage</label>
+                                                        <input type="number" step="any" name="percentage" required
+                                                            value="{{ $item->percentage }}" min="0" id="percentage"
                                                             class="form-control">
                                                     </div>
                                                     {{--  <div class="form-group mt-2">
@@ -180,6 +186,11 @@
                                 id="price" class="form-control">
                             <input type="hidden" step="any" name="pprice" required value="1" min="0"
                                 id="pprice" class="form-control">
+                        </div>
+                        <div class="form-group mt-2">
+                            <label for="percentage">Sale Percentage</label>
+                            <input type="number" step="any" name="percentage" required value=""
+                                min="0" id="percentage" class="form-control">
                         </div>
                         {{--  <div class="form-group mt-2">
                             <label for="discount">Discount</label>

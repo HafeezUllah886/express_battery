@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('isDefault')->default('No');
             $table->float('pprice');
             $table->float('price');
+            $table->float('percentage')->default(0);
             $table->float('discount')->default(0);
             $table->timestamps();
         });

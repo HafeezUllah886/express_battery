@@ -316,7 +316,8 @@
                         html +=
                             '<td class="no-padding"><input type="number" name="percentage[]" oninput="updateChanges(' +
                             id +
-                            ')" step="any" value="0" min="0" class="form-control text-center no-padding" id="percentage_' +
+                            ')" step="any" value="' + product.percentage +
+                            '" min="0" class="form-control text-center no-padding" id="percentage_' +
                             id +
                             '"></td>';
                         html +=

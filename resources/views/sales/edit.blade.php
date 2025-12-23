@@ -333,7 +333,8 @@
                         html +=
                             '<td class="no-padding"><input type="number" name="percentage[]" oninput="updateChanges(' +
                             id +
-                            ')" required step="any" value="0" min="1" class="form-control text-center" id="percentage_' +
+                            ')" required step="any" value="' + product.percentage +
+                            '" min="1" class="form-control text-center" id="percentage_' +
                             id + '"></td>';
                         html +=
                             '<td class="no-padding"><input type="number" name="price[]" oninput="updateChanges(' +
