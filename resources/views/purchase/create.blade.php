@@ -274,12 +274,15 @@
             var percentage = parseFloat($('#percentage_' + id).val());
             if (percentage > 18) {
                 var percentagewithouttax = percentage - 18;
+                var value = retail - (retail * percentagewithouttax / 100);
+            } else if (percentage < 18) {
+                var difference = 18 - percentage;
+                var percentagewithouttax = percentage + difference;
+                var value = retail + (retail * difference / 100);
             } else {
                 var percentagewithouttax = percentage;
+                var value = retail;
             }
-
-            var value = retail - (retail * percentagewithouttax / 100);
-            console.log(retail, percentage, value);
 
             var amount = qty * value;
             $("#amount_" + id).val(amount.toFixed(2));

@@ -282,22 +282,25 @@
 
         function updateChanges(id) {
 
-            var retail = $('#retail_' + id).val();
-            var percentage = $('#sale_percentage_' + id).val();
-            var stock = $('#stock_' + id).val();
-            var extra_tax = $('#extra_tax_' + id).val();
+            var retail = parseFloat($('#retail_' + id).val());
+            var percentage = parseFloat($('#sale_percentage_' + id).val());
+            var stock = parseFloat($('#stock_' + id).val());
+            var extra_tax = parseFloat($('#extra_tax_' + id).val());
+            var extra_tax_value = parseFloat(retail * extra_tax / 100);
 
             if (percentage > 18) {
-                var percentagewithouttax = percentage - 18;
+                var percentagewithouttax = parseFloat(percentage - 18);
+                var value = retail - (retail * percentagewithouttax / 100) + extra_tax_value;
+            } else if (percentage < 18) {
+                var difference = parseFloat(18 - percentage);
+                var percentagewithouttax = parseFloat(percentage + difference);
+                var value = parseFloat(retail + (retail * difference / 100)) + extra_tax_value;
             } else {
-                var percentagewithouttax = percentage;
+                var percentagewithouttax = parseFloat(percentage);
+                var value = parseFloat(retail + extra_tax_value);
             }
 
-            var extra_tax_value = retail * extra_tax / 100;
-
-            var value = retail - (retail * percentagewithouttax / 100) + extra_tax_value;
-
-            var profit = value - $('#pprice_' + id).val();
+            var profit = value - parseFloat($('#pprice_' + id).val());
 
             $("#stockValue_" + id).text(stock);
             $("#qty_" + id).attr("max", stock);
