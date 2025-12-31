@@ -64,7 +64,6 @@
                                                 <tr class="table-active">
                                                     <th scope="col" style="width: 50px;">#</th>
                                                     <th scope="col" class="text-start">Product</th>
-                                                    <th scope="col" class="text-start">Warehouse</th>
                                                     <th scope="col" class="text-end">Retail</th>
                                                     <th scope="col" class="text-end">Percentage</th>
                                                     <th scope="col" class="text-end">Purchase Price</th>
@@ -77,7 +76,6 @@
                                                     <tr>
                                                         <td class="p-1 m-1">{{ $key + 1 }}</td>
                                                         <td class="text-start p-1 m-1">{{ $product->product->name }}</td>
-                                                        <td class="text-start p-1 m-1">{{ $product->warehouse->name }}</td>
                                                         <td class="text-end p-1 m-1">
                                                             {{ number_format($product->retail, 2) }}
                                                         </td>
@@ -91,7 +89,6 @@
                                                         </td>
                                                         <td class="text-end p-1 m-1">
                                                             {{ number_format($product->amount, 2) }}</td>
-
                                                     </tr>
                                                 @endforeach
                                             </tbody>
@@ -113,23 +110,10 @@
                                             <th class="text-end p-1 m-1">Total</th>
                                             <th class="text-end p-1 m-1">{{ number_format($amount, 2) }}</th>
                                         </tr>
-                                        <tr>
-                                            <th class="text-end p-1 m-1">Discount</th>
-                                            <th class="text-end p-1 m-1">{{ number_format($discount, 2) }}</th>
-                                        </tr>
-                                        <tr>
-                                            <th class="text-end p-1 m-1">Delivery Charges</th>
-                                            <th class="text-end p-1 m-1">{{ number_format($dc, 2) }}</th>
-                                        </tr>
-                                        <tr>
-                                            <th class="text-end p-1 m-1">Net Bill </th>
-                                            <th class="text-end p-1 m-1">{{ number_format($net, 2) }}</th>
-                                        </tr>
+
                                     </table>
                                 </div>
                             </div>
-
-
                         </div>
                         <div class="card-footer">
                             <p><strong>Notes: </strong>{{ $purchase->notes }}</p>

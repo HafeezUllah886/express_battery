@@ -6,6 +6,7 @@ use App\Http\Middleware\confirmPassword;
 use App\Models\accounts;
 use App\Models\categories;
 use App\Models\products;
+use App\Models\purchase_details;
 use App\Models\sale_details;
 use App\Models\sale_payments;
 use App\Models\sales;
@@ -47,16 +48,29 @@ class SalesController extends Controller
      */
     public function create()
     {
-        $products = products::orderby('name', 'asc')->get();
-        foreach($products as $product)
-        {
-            $product->stock = getStock($product->id);
-        }
-        $warehouses = warehouses::all();
+        $sold = sale_details::select('purchase_id', DB::raw('SUM(qty) as total_sold_qty'))
+            ->groupBy('purchase_id');
+
+         $products = purchase_details::select(
+            'purchase_details.*',
+            'products.name as name',
+            DB::raw('(purchase_details.qty - COALESCE(sold.total_sold_qty, 0)) as avail_qty')
+        )
+            ->leftJoin('products', 'purchase_details.productID', '=', 'products.id')
+            ->leftJoinSub($sold, 'sold', function ($join) {
+                $join->on('purchase_details.id', '=', 'sold.purchase_id');
+            })
+            ->whereRaw('COALESCE(sold.total_sold_qty, 0) < purchase_details.qty')
+            ->orderBy('purchase_details.id', 'desc')
+            ->limit(200)
+            ->get();
+
         $customers = accounts::customerVendor()->get();
         $accounts = accounts::business()->get();
         $cats = categories::orderBy('name', 'asc')->get();
-        return view('sales.create', compact('products', 'warehouses', 'customers', 'accounts', 'cats'));
+
+
+        return view('sales.create', compact('products', 'customers', 'accounts', 'cats'));
     }
 
     /**
@@ -79,8 +93,6 @@ class SalesController extends Controller
                   'customerID'      => $request->customerID,
                   'date'            => $request->date,
                   'notes'           => $request->notes,
-                  'discount'        => $request->discount,
-                  'dc'              => $request->dc,
                   'payment_status'  => $request->status,
                   'scrap_amount'    => $request->scrap_amount,
                   'payment'         => $request->paid,
@@ -108,34 +120,36 @@ class SalesController extends Controller
                 $qty = $request->qty[$key];
                 $price = $request->price[$key];
                 $retail = $request->retail[$key];
-                $percentage = $request->percentage[$key];
+                $purchase_percentage = $request->purchase_percentage[$key];
+                $sale_percentage = $request->sale_percentage[$key];
+                $pprice = $request->pprice[$key];
+                $profit = $request->profit[$key];
                 $total += $request->amount[$key];
 
                 sale_details::create(
                     [
-                        'salesID'       => $sale->id,
-                        'productID'     => $id,
-                        'price'         => $price,
-                        'retail'        => $retail,
-                        'percentage'    => $percentage,
-                        'warehouseID'   => $request->warehouse[$key], 
-                        'qty'           => $qty,
-                        'amount'        => $request->amount[$key],
-                        'date'          => $request->date,
-                        'refID'         => $ref,
+                        'salesID'               => $sale->id,
+                        'productID'             => $request->productID[$key],
+                        'purchase_id'           => $id,
+                        'retail'                => $retail,
+                        'purchase_percentage'   => $purchase_percentage,
+                        'sale_percentage'       => $sale_percentage,
+                        'extra_tax'             => $request->extra_tax[$key],
+                        'pprice'                => $pprice,
+                        'price'                 => $price,
+                        'qty'                   => $qty,
+                        'amount'                => $request->amount[$key],
+                        'profit'                => $profit,
+                        'date'                  => $request->date,
+                        'refID'                 => $ref,
                     ]
                 );
-                /*  $product = products::find($id);
-                $note_details .= $qty . "x " . $product->name . " at " . number_format($price) . "<br>"; */
-                createStock($id,0, $qty, $request->date, "Sold in Inv # $sale->id to $customer_name", $ref, $request->warehouse[$key]);
                 }
 
             }
 
-            $discount = $request->discount;
-            $dc = $request->dc;
             $scrap_amount = $request->scrap_amount;
-            $net = ($total + $dc) - $discount - $scrap_amount;
+            $net = $total - $scrap_amount;
 
             $sale->update(
                 [
@@ -504,10 +518,12 @@ class SalesController extends Controller
 
     public function getSignleProduct($id)
     {
-        $product = products::find($id);
-        $stocks = getStock($product->id);
-
-        $product->stock = $stocks;
+        $product = purchase_details::find($id);
+        $product->stock = $product->qty - sale_details::where('purchase_id', $id)->sum('qty');
+        $product_datails = products::find($product->productID);
+        $product->name = $product_datails->name;
+        $product->sale_percentage = $product_datails->sale_percentage;
+        $product->extra_tax = $product_datails->extra_tax;
         return $product;
     }
 

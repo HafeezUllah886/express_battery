@@ -16,11 +16,9 @@ return new class extends Migration
             $table->string('code')->unique();
             $table->string('name');
             $table->foreignId('catID')->constrained('categories', 'id');
-            $table->string('isDefault')->default('No');
-            $table->float('pprice');
             $table->float('price');
-            $table->float('percentage')->default(0);
-            $table->float('discount')->default(0);
+            $table->float('sale_percentage');
+            $table->float('extra_tax');
             $table->timestamps();
         });
     }

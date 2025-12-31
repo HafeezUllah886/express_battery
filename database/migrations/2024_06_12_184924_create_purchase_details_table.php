@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->foreignId('purchaseID')->constrained('purchases', 'id');
             $table->foreignId('productID')->constrained('products', 'id');
-            $table->foreignId('warehouseID')->constrained('warehouses', 'id'); 
             $table->float('retail', 10);
             $table->float('percentage', 10);
             $table->float('pprice', 10);
@@ -23,6 +22,7 @@ return new class extends Migration
             $table->float('amount');
             $table->date('date');
             $table->bigInteger('refID');
+            $table->string('status')->default('available');
             $table->timestamps();
         });
     }

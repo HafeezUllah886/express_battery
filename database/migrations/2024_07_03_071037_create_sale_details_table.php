@@ -15,12 +15,16 @@ return new class extends Migration
             $table->id();
             $table->foreignId('salesID')->constrained('sales', 'id');
             $table->foreignId('productID')->constrained('products', 'id');
-           $table->foreignId('warehouseID')->constrained('warehouses', 'id');
+            $table->foreignId('purchase_id')->constrained('purchase_details', 'id');
             $table->float('retail', 10);
-            $table->float('percentage', 10);
+            $table->float('purchase_percentage', 10);
+            $table->float('sale_percentage', 10);
+            $table->float('extra_tax', 10);
+            $table->float('pprice', 10);
             $table->float('price', 10);
             $table->float('qty');
             $table->float('amount');
+            $table->float('profit');
             $table->date('date');
             $table->bigInteger('refID');
             $table->timestamps();

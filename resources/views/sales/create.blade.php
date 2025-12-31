@@ -68,9 +68,7 @@
                                     <select name="product" class="selectize" id="product">
                                         <option value=""></option>
                                         @foreach ($products as $product)
-                                            @if ($product->stock > 0)
-                                                <option value="{{ $product->id }}">{{ $product->name }}</option>
-                                            @endif
+                                            <option value="{{ $product->id }}">{{ $product->name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -80,10 +78,9 @@
                                 <table class="table table-striped table-hover">
                                     <thead>
                                         <th width="20%">Product</th>
-                                        <th class="text-center">Warehouse</th>
-                                        <th class="text-center">Qty</th>
                                         <th class="text-center">Retail</th>
-                                        <th class="text-center">Percentage</th>
+                                        <th class="text-center">Sale Percentage</th>
+                                        <th class="text-center">Qty</th>
                                         <th class="text-center">Price</th>
                                         <th class="text-center">Amount</th>
                                         <th></th>
@@ -91,52 +88,37 @@
                                     <tbody id="products_list"></tbody>
                                     <tfoot>
                                         <tr>
-                                            <th colspan="2" class="text-end">Total</th>
+                                            <th colspan="3" class="text-end">Total</th>
                                             <th class="text-end" id="totalQty">0.00</th>
-                                            <th></th>
-                                            <th></th>
                                             <th></th>
                                             <th class="text-end" id="totalAmount">0.00</th>
                                         </tr>
                                     </tfoot>
                                 </table>
                             </div>
-                            <div class="col-3">
+                            <div class="col-1">
                                 <div class="form-group">
                                     <label for="scrap_amount">Scrap Amount</label>
                                     <input type="number" name="scrap_amount" oninput="updateTotal()" readonly
                                         id="scrap_amount" step="any" value="0" class="form-control no_zero">
                                 </div>
                             </div>
-                            <div class="col-3">
-                                <div class="form-group">
-                                    <label for="discount">Discount</label>
-                                    <input type="number" name="discount" oninput="updateTotal()" id="discount"
-                                        step="any" value="0" class="form-control no_zero">
-                                </div>
-                            </div>
-                            <div class="col-3">
-                                <div class="form-group">
-                                    <label for="dc">Delivery Charges</label>
-                                    <input type="number" name="dc" id="dc" oninput="updateTotal()"
-                                        min="0" step="any" value="0" class="form-control no_zero">
-                                </div>
-                            </div>
-                            <div class="col-3">
+
+                            <div class="col-2">
                                 <div class="form-group">
                                     <label for="net">Net Amount</label>
                                     <input type="number" name="net" id="net" step="any" readonly
                                         value="0" class="form-control">
                                 </div>
                             </div>
-                            <div class="col-3 mt-2">
+                            <div class="col-2">
                                 <div class="form-group">
                                     <label for="date">Date</label>
                                     <input type="date" name="date" id="date" value="{{ date('Y-m-d') }}"
                                         class="form-control">
                                 </div>
                             </div>
-                            <div class="col-3 mt-2">
+                            <div class="col-3">
                                 <div class="form-group">
                                     <label for="customer">Customer</label>
                                     <select name="customerID" id="customerID" class="selectize1">
@@ -151,7 +133,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-3 mt-2">
+                            <div class="col-2">
                                 <div class="form-group">
                                     <label for="account">Account</label>
                                     <select name="accountID" id="account" class="selectize1">
@@ -161,7 +143,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-3 mt-2">
+                            <div class="col-2">
                                 <div class="form-group">
                                     <label for="status">Payment Status</label>
                                     <select name="status" id="status1" class="form-control">
@@ -197,52 +179,6 @@
         </div>
         <!--end col-->
     </div>
-    <!--end row-->
-    <div id="new" class="modal fade" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true"
-        style="display: none;">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="myModalLabel">Create New Product</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"> </button>
-                </div>
-                <form id="productForm">
-                    <div class="modal-body">
-                        <div class="form-group mt-2">
-                            <label for="name">Name</label>
-                            <input type="text" name="name" required id="name" class="form-control">
-                        </div>
-                        <div class="form-group mt-2">
-                            <label for="catID">Category</label>
-                            <select name="catID" id="catID" class="form-control">
-                                @foreach ($cats as $cat)
-                                    <option value="{{ $cat->id }}">{{ $cat->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="form-group mt-2">
-                            <label for="pprice">Purchase Price</label>
-                            <input type="number" step="any" required name="pprice" value="0" min="0"
-                                id="pprice" class="form-control">
-                        </div>
-                        <div class="form-group mt-2">
-                            <label for="price">Sale Price</label>
-                            <input type="number" step="any" required name="price" value="0" min="0"
-                                id="price" class="form-control">
-                        </div>
-                        {{--  <div class="form-group mt-2">
-                                <label for="discount">Discount</label>
-                                <input type="number" step="any" name="discount" required value="0" min="0" id="discount" class="form-control">
-                            </div> --}}
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Save</button>
-                    </div>
-                </form>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
 @endsection
 
 @section('page-css')
@@ -278,7 +214,6 @@
 
             },
         });
-        var warehouses = @json($warehouses);
         var existingProducts = [];
 
         function getSingleProduct(id) {
@@ -293,15 +228,19 @@
                         var id = product.id;
                         var html = '<tr id="row_' + id + '">';
                         html += '<td class="no-padding">' + product.name + '</td>';
-                        html +=
-                            '<td class="no-padding"><select name="warehouse[]" class="form-control text-center no-padding" id="warehouse_' +
-                            id + '">';
-                        warehouses.forEach(function(warehouse) {
-                            html += '<option value="' + warehouse.id + '" >' + warehouse.name +
-                                '</option>';
-                        });
-                        html += '</select></td>';
 
+                        html +=
+                            '<td class="no-padding"><input type="number" name="retail[]" readonly oninput="updateChanges(' +
+                            id + ')" step="any" value="' + product.retail +
+                            '" min="1" class="form-control text-center no-padding" id="retail_' + id +
+                            '"></td>';
+                        html +=
+                            '<td class="no-padding"><input type="number" name="sale_percentage[]" oninput="updateChanges(' +
+                            id +
+                            ')" step="any" value="' + product.sale_percentage +
+                            '" class="form-control text-center no-padding" id="sale_percentage_' +
+                            id +
+                            '"></td>';
                         html +=
                             '<td class="no-padding"><div class="input-group"><span class="input-group-text no-padding" id="stockValue_' +
                             id + '">' + product.stock +
@@ -309,21 +248,10 @@
                             ')" min="0" required step="any" value="1" class="form-control text-center no-padding" id="qty_' +
                             id + '"></div></td>';
                         html +=
-                            '<td class="no-padding"><input type="number" name="retail[]" oninput="updateChanges(' +
-                            id + ')" step="any" value="' + product.price +
-                            '" min="1" class="form-control text-center no-padding" id="retail_' + id +
-                            '"></td>';
-                        html +=
-                            '<td class="no-padding"><input type="number" name="percentage[]" oninput="updateChanges(' +
-                            id +
-                            ')" step="any" value="' + product.percentage +
-                            '" min="0" class="form-control text-center no-padding" id="percentage_' +
-                            id +
-                            '"></td>';
-                        html +=
                             '<td class="no-padding"><input type="number" name="price[]" oninput="updateChanges(' +
-                            id + ')" step="any" value="' + product.price +
-                            '" min="1" class="form-control text-center no-padding" id="price_' + id + '"></td>';
+                            id +
+                            ')" step="any" value="0" min="1" class="form-control text-center no-padding" id="price_' +
+                            id + '"></td>';
                         html +=
                             '<td class="no-padding"><input type="number" name="amount[]" readonly step="any" value="0.00" min="0" class="form-control text-center no-padding" id="amount_' +
                             id + '"></td>';
@@ -331,7 +259,18 @@
                             '<td class="no-padding"> <span class="btn btn-sm btn-danger" onclick="deleteRow(' +
                             id + ')">X</span> </td>';
                         html += '<input type="hidden" name="id[]" value="' + id + '">';
+                        html += '<input type="hidden" name="productID[]" value="' + product.productID + '">';
                         html += '<input type="hidden" id="stock_' + id + '" value="' + product.stock + '">';
+                        html += '<input type="hidden" name="purchase_percentage[]" id="purchase_percentage_' +
+                            id + '" value="' + product
+                            .percentage + '">';
+                        html += '<input type="hidden" name="extra_tax[]" id="extra_tax_' + id + '" value="' +
+                            product.extra_tax +
+                            '">';
+                        html += '<input type="hidden" name="pprice[]" id="pprice_' + id + '" value="' + product
+                            .pprice +
+                            '">';
+                        html += '<input type="hidden" name="profit[]" id="profit_' + id + '" value="0">';
                         html += '</tr>';
                         $("#products_list").prepend(html);
                         updateChanges(id);
@@ -344,17 +283,31 @@
         function updateChanges(id) {
 
             var retail = $('#retail_' + id).val();
-            var percentage = $('#percentage_' + id).val();
+            var percentage = $('#sale_percentage_' + id).val();
             var stock = $('#stock_' + id).val();
-            var value = retail - (retail * percentage / 100);
+            var extra_tax = $('#extra_tax_' + id).val();
+
+            if (percentage > 18) {
+                var percentagewithouttax = percentage - 18;
+            } else {
+                var percentagewithouttax = percentage;
+            }
+
+            var extra_tax_value = retail * extra_tax / 100;
+
+            var value = retail - (retail * percentagewithouttax / 100) + extra_tax_value;
+
+            var profit = value - $('#pprice_' + id).val();
+
             $("#stockValue_" + id).text(stock);
             $("#qty_" + id).attr("max", stock);
             var qty = $('#qty_' + id).val();
             $('#price_' + id).val(value);
+            $('#profit_' + id).val(profit);
 
             var amount = value * qty;
 
-            $("#amount_" + id).val(amount);
+            $("#amount_" + id).val(amount.toFixed(0));
 
             updateTotal();
         }
@@ -366,13 +319,13 @@
                 var inputValue = $(this).val();
                 totalAmount += parseFloat(inputValue);
             });
-            $("#totalAmount").html(totalAmount.toFixed(2));
+            $("#totalAmount").html(totalAmount.toFixed(0));
 
             var discount = parseFloat($("#discount").val());
             var scrap_amount = parseFloat($("#scrap_amount").val());
             var dc = parseFloat($("#dc").val());
 
-            var net = (totalAmount + dc) - discount - scrap_amount;
+            var net = totalAmount - scrap_amount;
 
             $("#net").val(net);
 

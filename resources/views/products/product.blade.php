@@ -25,9 +25,9 @@
                             <th>Code</th>
                             <th>Name</th>
                             <th>Category</th>
-                            {{--   <th>Purchase Price</th> --}}
-                            <th>Retail Sale</th>
+                            <th>Retail Price</th>
                             <th>Sale Percentage</th>
+                            <th>Extra Tax</th>
                             <th>Action</th>
                         </thead>
                         <tbody>
@@ -37,9 +37,9 @@
                                     <td>{{ $item->code }}</td>
                                     <td>{{ $item->name }}</td>
                                     <td>{{ $item->category->name }}</td>
-                                    {{--  <td>{{ number_format($item->pprice, 2) }}</td> --}}
                                     <td>{{ number_format($item->price, 2) }}</td>
-                                    <td>{{ $item->percentage }}</td>
+                                    <td>{{ number_format($item->sale_percentage, 2) }}</td>
+                                    <td>{{ number_format($item->extra_tax, 2) }}</td>
                                     <td>
                                         <button type="button" class="btn btn-info " data-bs-toggle="modal"
                                             data-bs-target="#edit_{{ $item->id }}">Edit</button>
@@ -83,37 +83,24 @@
                                                         </select>
                                                     </div>
                                                     <div class="form-group mt-2">
-                                                        <label for="isDefault">Default</label>
-                                                        <select name="isDefault" id="isDefault" class="form-control">
-                                                            <option value="No" @selected($item->isDefault == 'No')>No</option>
-                                                            <option value="Yes" @selected($item->isDefault == 'Yes')>Yes</option>
-
-                                                        </select>
-                                                    </div>
-                                                    {{--  <div class="form-group mt-2">
-                                                        <label for="pprice">Purchase Price</label>
-                                                        <input type="number" step="any" name="pprice" required
-                                                            value="{{ $item->pprice }}" min="0" id="pprice"
-                                                            class="form-control">
-                                                    </div> --}}
-                                                    <div class="form-group mt-2">
                                                         <label for="price">Retail Price</label>
                                                         <input type="number" step="any" name="price" required
                                                             value="{{ $item->price }}" min="0" id="price"
                                                             class="form-control">
                                                     </div>
                                                     <div class="form-group mt-2">
-                                                        <label for="percentage">Sale Percentage</label>
-                                                        <input type="number" step="any" name="percentage" required
-                                                            value="{{ $item->percentage }}" min="0" id="percentage"
+                                                        <label for="sale_percentage">Sale Percentage</label>
+                                                        <input type="number" step="any" name="sale_percentage" required
+                                                            value="{{ $item->sale_percentage }}" min="0"
+                                                            id="sale_percentage" class="form-control">
+                                                    </div>
+
+                                                    <div class="form-group mt-2">
+                                                        <label for="extra_tax">Extra Tax</label>
+                                                        <input type="number" step="any" name="extra_tax" required
+                                                            value="{{ $item->extra_tax }}" min="0" id="extra_tax"
                                                             class="form-control">
                                                     </div>
-                                                    {{--  <div class="form-group mt-2">
-                                                        <label for="discount">Discount</label>
-                                                        <input type="number" step="any" name="discount" required
-                                                            value="{{ $item->discount }}" min="0"
-                                                            id="discount" class="form-control">
-                                                    </div> --}}
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-light"
@@ -168,34 +155,21 @@
                             </select>
                         </div>
                         <div class="form-group mt-2">
-                            <label for="isDefault">Default</label>
-                            <select name="isDefault" id="isDefault" class="form-control">
-                                <option value="No">No</option>
-                                <option value="Yes">Yes</option>
-
-                            </select>
-                        </div>
-                        {{-- <div class="form-group mt-2">
-                            <label for="pprice">Purchase Price</label>
-                            <input type="number" step="any" name="pprice" required value="" min="0"
-                                id="pprice" class="form-control">
-                        </div> --}}
-                        <div class="form-group mt-2">
                             <label for="price">Retail Price</label>
                             <input type="number" step="any" name="price" required value="" min="0"
                                 id="price" class="form-control">
-                            <input type="hidden" step="any" name="pprice" required value="1" min="0"
-                                id="pprice" class="form-control">
                         </div>
                         <div class="form-group mt-2">
-                            <label for="percentage">Sale Percentage</label>
-                            <input type="number" step="any" name="percentage" required value=""
-                                min="0" id="percentage" class="form-control">
+                            <label for="sale_percentage">Sale Percentage</label>
+                            <input type="number" step="any" name="sale_percentage" required value=""
+                                min="0" id="sale_percentage" class="form-control">
                         </div>
-                        {{--  <div class="form-group mt-2">
-                            <label for="discount">Discount</label>
-                            <input type="number" step="any" name="discount" required value="0" min="0" id="discount" class="form-control">
-                        </div> --}}
+                        <div class="form-group mt-2">
+                            <label for="extra_tax">Extra Tax</label>
+                            <input type="number" step="any" name="extra_tax" required value=""
+                                min="0" id="extra_tax" class="form-control">
+                        </div>
+
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>

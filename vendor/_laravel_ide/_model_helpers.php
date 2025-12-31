@@ -320,13 +320,13 @@ namespace App\Models {
      * @method static \Illuminate\Database\Eloquent\Builder<accounts>|accounts whereAddress($value)
      * @method static \Illuminate\Database\Eloquent\Builder<accounts>|accounts whereCreatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<accounts>|accounts whereUpdatedAt($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<accounts>|accounts newModelQuery()
+     * @method static \Illuminate\Database\Eloquent\Builder<accounts>|accounts newQuery()
+     * @method static \Illuminate\Database\Eloquent\Builder<accounts>|accounts query()
      * @method static \Illuminate\Database\Eloquent\Builder<accounts>|accounts business()
      * @method static \Illuminate\Database\Eloquent\Builder<accounts>|accounts customer()
      * @method static \Illuminate\Database\Eloquent\Builder<accounts>|accounts vendor()
      * @method static \Illuminate\Database\Eloquent\Builder<accounts>|accounts customerVendor()
-     * @method static \Illuminate\Database\Eloquent\Builder<accounts>|accounts newModelQuery()
-     * @method static \Illuminate\Database\Eloquent\Builder<accounts>|accounts newQuery()
-     * @method static \Illuminate\Database\Eloquent\Builder<accounts>|accounts query()
      * @method static mixed select($columns)
      * @method static mixed selectSub($query, $as)
      * @method static mixed selectRaw($expression, array $bindings)
@@ -2645,10 +2645,9 @@ namespace App\Models {
      *
      * @property \Illuminate\Support\Carbon|null $updated_at
      * @property \Illuminate\Support\Carbon|null $created_at
-     * @property float $discount
+     * @property float $extra_tax
+     * @property float $sale_percentage
      * @property float $price
-     * @property float $pprice
-     * @property string $isDefault
      * @property int $catID
      * @property string $name
      * @property string $code
@@ -2661,10 +2660,9 @@ namespace App\Models {
      * @method static \Illuminate\Database\Eloquent\Builder<products>|products whereCode($value)
      * @method static \Illuminate\Database\Eloquent\Builder<products>|products whereName($value)
      * @method static \Illuminate\Database\Eloquent\Builder<products>|products whereCatid($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<products>|products whereIsdefault($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<products>|products wherePprice($value)
      * @method static \Illuminate\Database\Eloquent\Builder<products>|products wherePrice($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<products>|products whereDiscount($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<products>|products whereSalePercentage($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<products>|products whereExtraTax($value)
      * @method static \Illuminate\Database\Eloquent\Builder<products>|products whereCreatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<products>|products whereUpdatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<products>|products newModelQuery()
@@ -2949,8 +2947,6 @@ namespace App\Models {
      * @property string|null $notes
      * @property string|null $inv
      * @property float $total
-     * @property float $dc
-     * @property float $discount
      * @property string $date
      * @property string|null $vendorName
      * @property int $vendorID
@@ -2964,8 +2960,6 @@ namespace App\Models {
      * @method static \Illuminate\Database\Eloquent\Builder<purchase>|purchase whereVendorid($value)
      * @method static \Illuminate\Database\Eloquent\Builder<purchase>|purchase whereVendorname($value)
      * @method static \Illuminate\Database\Eloquent\Builder<purchase>|purchase whereDate($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<purchase>|purchase whereDiscount($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<purchase>|purchase whereDc($value)
      * @method static \Illuminate\Database\Eloquent\Builder<purchase>|purchase whereTotal($value)
      * @method static \Illuminate\Database\Eloquent\Builder<purchase>|purchase whereInv($value)
      * @method static \Illuminate\Database\Eloquent\Builder<purchase>|purchase whereNotes($value)
@@ -3250,6 +3244,7 @@ namespace App\Models {
      *
      * @property \Illuminate\Support\Carbon|null $updated_at
      * @property \Illuminate\Support\Carbon|null $created_at
+     * @property string $status
      * @property int $refID
      * @property string $date
      * @property float $amount
@@ -3257,7 +3252,6 @@ namespace App\Models {
      * @property mixed $pprice
      * @property mixed $percentage
      * @property mixed $retail
-     * @property int $warehouseID
      * @property int $productID
      * @property int $purchaseID
      * @property int $id
@@ -3266,7 +3260,6 @@ namespace App\Models {
      * @method static \Illuminate\Database\Eloquent\Builder<purchase_details>|purchase_details whereId($value)
      * @method static \Illuminate\Database\Eloquent\Builder<purchase_details>|purchase_details wherePurchaseid($value)
      * @method static \Illuminate\Database\Eloquent\Builder<purchase_details>|purchase_details whereProductid($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<purchase_details>|purchase_details whereWarehouseid($value)
      * @method static \Illuminate\Database\Eloquent\Builder<purchase_details>|purchase_details whereRetail($value)
      * @method static \Illuminate\Database\Eloquent\Builder<purchase_details>|purchase_details wherePercentage($value)
      * @method static \Illuminate\Database\Eloquent\Builder<purchase_details>|purchase_details wherePprice($value)
@@ -3274,6 +3267,7 @@ namespace App\Models {
      * @method static \Illuminate\Database\Eloquent\Builder<purchase_details>|purchase_details whereAmount($value)
      * @method static \Illuminate\Database\Eloquent\Builder<purchase_details>|purchase_details whereDate($value)
      * @method static \Illuminate\Database\Eloquent\Builder<purchase_details>|purchase_details whereRefid($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<purchase_details>|purchase_details whereStatus($value)
      * @method static \Illuminate\Database\Eloquent\Builder<purchase_details>|purchase_details whereCreatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<purchase_details>|purchase_details whereUpdatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<purchase_details>|purchase_details newModelQuery()
@@ -4721,14 +4715,16 @@ namespace App\Models {
      *
      * @property \Illuminate\Support\Carbon|null $updated_at
      * @property \Illuminate\Support\Carbon|null $created_at
+     * @property int $purchase_id
      * @property int $refID
      * @property string $date
      * @property float $amount
      * @property float $qty
      * @property mixed $price
-     * @property mixed $percentage
+     * @property mixed $extra_tax
+     * @property mixed $sale_percentage
+     * @property mixed $purchase_percentage
      * @property mixed $retail
-     * @property int $warehouseID
      * @property int $productID
      * @property int $salesID
      * @property int $id
@@ -4736,14 +4732,16 @@ namespace App\Models {
      * @method static \Illuminate\Database\Eloquent\Builder<sale_details>|sale_details whereId($value)
      * @method static \Illuminate\Database\Eloquent\Builder<sale_details>|sale_details whereSalesid($value)
      * @method static \Illuminate\Database\Eloquent\Builder<sale_details>|sale_details whereProductid($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<sale_details>|sale_details whereWarehouseid($value)
      * @method static \Illuminate\Database\Eloquent\Builder<sale_details>|sale_details whereRetail($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<sale_details>|sale_details wherePercentage($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<sale_details>|sale_details wherePurchasePercentage($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<sale_details>|sale_details whereSalePercentage($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<sale_details>|sale_details whereExtraTax($value)
      * @method static \Illuminate\Database\Eloquent\Builder<sale_details>|sale_details wherePrice($value)
      * @method static \Illuminate\Database\Eloquent\Builder<sale_details>|sale_details whereQty($value)
      * @method static \Illuminate\Database\Eloquent\Builder<sale_details>|sale_details whereAmount($value)
      * @method static \Illuminate\Database\Eloquent\Builder<sale_details>|sale_details whereDate($value)
      * @method static \Illuminate\Database\Eloquent\Builder<sale_details>|sale_details whereRefid($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<sale_details>|sale_details wherePurchaseId($value)
      * @method static \Illuminate\Database\Eloquent\Builder<sale_details>|sale_details whereCreatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<sale_details>|sale_details whereUpdatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<sale_details>|sale_details newModelQuery()

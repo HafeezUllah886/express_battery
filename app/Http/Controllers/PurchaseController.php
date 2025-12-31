@@ -41,11 +41,10 @@ class PurchaseController extends Controller
     public function create()
     {
         $products = products::orderby('name', 'asc')->get();
-        $warehouses = warehouses::all();
         $vendors = accounts::customerVendor()->get();
         $accounts = accounts::business()->get();
         $cats = categories::orderBy('name', 'asc')->get();
-        return view('purchase.create', compact('products', 'warehouses', 'vendors', 'accounts', 'cats'));
+        return view('purchase.create', compact('products', 'vendors', 'accounts', 'cats'));
     }
 
     /**
@@ -67,8 +66,6 @@ class PurchaseController extends Controller
                   'vendorID'        => $request->vendorID,
                   'date'            => $request->date,
                   'notes'           => $request->notes,
-                  'discount'        => $request->discount,
-                  'dc'              => $request->dc,
                   'vendorName'      => $request->vendorName,
                   'payment_status'  => $request->status,
                   'inv'             => $request->inv,
@@ -101,21 +98,15 @@ class PurchaseController extends Controller
                         'amount'        => $amount,
                         'date'          => $request->date,
                         'refID'         => $ref,
-                        'warehouseID'   => $request->warehouse[$key],
                     ]
                 );
-                createStock($id, $qty, 0, $request->date, "Purchased Notes: $request->notes", $ref, $request->warehouse[$key]);
 
                 }
             }
 
-           
-
-            $net = ($total + $request->dc) - $request->discount;
-
             $purchase->update(
                 [
-                    'total' => $net,
+                    'total' => $total,
                 ]
             );
 
@@ -126,21 +117,21 @@ class PurchaseController extends Controller
                         'purchaseID'    => $purchase->id,
                         'accountID'     => $request->accountID,
                         'date'          => $request->date,
-                        'amount'        => $net,
+                        'amount'        => $total,
                         'notes'         => "Full Paid",
                         'refID'         => $ref,
                     ]
                 );
 
-                createTransaction($request->accountID, $request->date, 0, $net, "Payment of Purchase No. $purchase->id Notes: $request->notes", $ref, 'Purchase');
-                createTransaction($request->vendorID, $request->date, $net, $net, "Payment of Purchase No. $purchase->id Notes: $request->notes", $ref, 'Purchase');
+                createTransaction($request->accountID, $request->date, 0, $total, "Payment of Purchase No. $purchase->id Notes: $request->notes", $ref, 'Purchase');
+                createTransaction($request->vendorID, $request->date, $total, $total, "Payment of Purchase No. $purchase->id Notes: $request->notes", $ref, 'Purchase');
             }
             elseif($request->status == 'advanced')
             {
                 $balance = getAccountBalance($request->vendorID);
-                if($net > $balance)
+                if($total > $balance)
                 {
-                    createTransaction($request->vendorID, $request->date, 0, $net, "Pending Amount of Purchase No. $purchase->id Notes: $request->notes", $ref, 'Purchase');
+                    createTransaction($request->vendorID, $request->date, 0, $total, "Pending Amount of Purchase No. $purchase->id Notes: $request->notes", $ref, 'Purchase');
                     DB::commit();
                     return back()->with('success', "Purchase Created: Balance was not enough moved to unpaid / pending");
                 }
@@ -149,17 +140,17 @@ class PurchaseController extends Controller
                         'purchaseID'    => $purchase->id,
                         'accountID'     => $request->accountID,
                         'date'          => $request->date,
-                        'amount'        => $net,
+                        'amount'        => $total,
                         'notes'         => "Full Paid",
                         'refID'         => $ref,
                     ]
                 );
 
-                createTransaction($request->vendorID, $request->date, 0, $net, "Purchase No. $purchase->id Notes: $request->notes", $ref, 'Purchase');
+                createTransaction($request->vendorID, $request->date, 0, $total, "Purchase No. $purchase->id Notes: $request->notes", $ref, 'Purchase');
             }
             else
             {
-                createTransaction($request->vendorID, $request->date, 0, $net, "Pending Amount of Purchase No. $purchase->id Notes: $request->notes", $ref, 'Purchase');
+                createTransaction($request->vendorID, $request->date, 0, $total, "Pending Amount of Purchase No. $purchase->id Notes: $request->notes", $ref, 'Purchase');
             }
             DB::commit();
             return back()->with('success', "Purchase Created");
