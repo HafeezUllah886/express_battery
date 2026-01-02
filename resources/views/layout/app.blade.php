@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="en" data-layout="vertical" data-topbar="light" data-sidebar="dark" data-sidebar-size="lg"
     data-sidebar-image="none" data-preloader="disable" data-theme="default" data-theme-colors="default">
+
 <head>
     <meta charset="utf-8" />
     <title>Business Management System</title>
@@ -21,7 +22,7 @@
     <!-- custom Css-->
     <link href="{{ asset('assets/css/custom.min.css') }}" rel="stylesheet" type="text/css" />
 
-    <link href="{{ asset('assets/libs/toastify/toastify.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/libs/toastify/toastify.min.css') }}" rel="stylesheet" type="text/css" />
 
     @yield('page-css')
 
@@ -36,21 +37,21 @@
                     <div class="d-flex">
                         <!-- LOGO -->
                         <div class="navbar-brand-box horizontal-logo">
-                            <a href="{{route('dashboard')}}" class="logo logo-dark">
+                            <a href="{{ route('dashboard') }}" class="logo logo-dark">
                                 <span class="logo-sm">
-                                    <h3 class="text-white">{{projectNameShort()}}</h3>
+                                    <h3 class="text-white">{{ projectNameShort() }}</h3>
                                 </span>
                                 <span class="logo-lg">
-                                    <h3 class="text-white mt-3">{{projectNameHeader()}}</h3>
+                                    <h3 class="text-white mt-3">{{ projectNameHeader() }}</h3>
                                 </span>
                             </a>
                             <!-- Light Logo-->
-                            <a href="{{route('dashboard')}}" class="logo logo-light">
+                            <a href="{{ route('dashboard') }}" class="logo logo-light">
                                 <span class="logo-sm">
-                                    <h3 class="text-white">{{projectNameShort()}}</h3>
+                                    <h3 class="text-white">{{ projectNameShort() }}</h3>
                                 </span>
                                 <span class="logo-lg">
-                                    <h3 class="text-white mt-3">{{projectNameHeader()}}</h3>
+                                    <h3 class="text-white mt-3">{{ projectNameHeader() }}</h3>
                                 </span>
                             </a>
                         </div>
@@ -69,12 +70,12 @@
 
                     <div class="d-flex align-items-center">
 
-                        <div class="ms-1 header-item d-none d-sm-flex">
+                        {{-- <div class="ms-1 header-item d-none d-sm-flex">
                             <a onclick="newWindow('{{ route('pos') }}')"
                                 class="btn btn-info btn-icon btn-topbar material-shadow-none text-white rounded-circle">
                                 POS
                             </a>
-                        </div>
+                        </div> --}}
                         <div class="ms-1 header-item d-none d-sm-flex">
                             <button type="button"
                                 class="btn btn-icon btn-topbar material-shadow-none btn-ghost-secondary rounded-circle"
@@ -96,15 +97,17 @@
                                     <img class="rounded-circle header-profile-user"
                                         src="{{ asset('assets/images/users/avatar-1.jpg') }}" alt="Header Avatar">
                                     <span class="text-start ms-xl-2">
-                                        <span class="d-none d-xl-inline-block ms-1 fw-medium user-name-text">{{ auth()->user()->name }}</span>
-                                        <span class="d-none d-xl-block ms-1 fs-12 user-name-sub-text">{{ auth()->user()->role == 1 ? "Admin" : "Operator" }}</span>
+                                        <span
+                                            class="d-none d-xl-inline-block ms-1 fw-medium user-name-text">{{ auth()->user()->name }}</span>
+                                        <span
+                                            class="d-none d-xl-block ms-1 fs-12 user-name-sub-text">{{ auth()->user()->role == 1 ? 'Admin' : 'Operator' }}</span>
                                     </span>
                                 </span>
                             </button>
                             <div class="dropdown-menu dropdown-menu-end">
                                 <!-- item-->
                                 <h6 class="dropdown-header">Welcome {{ auth()->user()->name }}!</h6>
-                                <a class="dropdown-item" href="{{route('profile')}}"><i
+                                <a class="dropdown-item" href="{{ route('profile') }}"><i
                                         class="mdi mdi-account-circle text-muted fs-16 align-middle me-1"></i> <span
                                         class="align-middle">Profile</span></a>
                                 <a class="dropdown-item" href="{{ route('logout') }}"><i
@@ -193,54 +196,53 @@
     <script src="{{ asset('assets/libs/node-waves/waves.min.js') }}"></script>
     <script src="{{ asset('assets/libs/feather-icons/feather.min.js') }}"></script>
     <script src="{{ asset('assets/js/pages/plugins/lord-icon-2.1.0.js') }}"></script>
-{{--     <script src="{{ asset('assets/js/plugins.js') }}"></script> --}}
+    {{--     <script src="{{ asset('assets/js/plugins.js') }}"></script> --}}
 
     <!-- App js -->
     <script src="{{ asset('assets/js/app.js') }}"></script>
-    <script src="{{ asset('assets/libs/toastify/toastify.min.js')}}"></script>
+    <script src="{{ asset('assets/libs/toastify/toastify.min.js') }}"></script>
 
     <script src="{{ asset('assets/js/jquery-3.6.0.min.js') }}"></script>
 
 
     @if (Session::get('success'))
+        <script>
+            Toastify({
+                text: "{{ Session::get('success') }}",
+                className: "info",
+                close: true,
+                gravity: "top", // `top` or `bottom`
+                position: "center", // `left`, `center` or `right`
+                stopOnFocus: true, // Prevents dismissing of toast on hover
+                style: {
+                    background: "linear-gradient(to right, #01CB3E, #96c93d)",
+                }
+            }).showToast();
+        </script>
+    @endif
+    @if (Session::get('error'))
+        <script>
+            Toastify({
+                text: "{{ Session::get('error') }}",
+                className: "info",
+                close: true,
+                gravity: "top", // `top` or `bottom`
+                position: "center", // `left`, `center` or `right`
+                stopOnFocus: true, // Prevents dismissing of toast on hover
+                style: {
+                    background: "linear-gradient(to right, #FF5733, #E70000)",
+                }
+            }).showToast();
+        </script>
+    @endif
     <script>
-       Toastify({
-        text: "{{Session::get('success')}}",
-        className: "info",
-        close: true,
-        gravity: "top", // `top` or `bottom`
-        position: "center", // `left`, `center` or `right`
-        stopOnFocus: true, // Prevents dismissing of toast on hover
-        style: {
-            background: "linear-gradient(to right, #01CB3E, #96c93d)",
-        }
-        }).showToast();
-    </script>
-@endif
-@if (Session::get('error'))
-    <script>
-         Toastify({
-        text: "{{Session::get('error')}}",
-        className: "info",
-        close: true,
-        gravity: "top", // `top` or `bottom`
-        position: "center", // `left`, `center` or `right`
-        stopOnFocus: true, // Prevents dismissing of toast on hover
-        style: {
-            background: "linear-gradient(to right, #FF5733, #E70000)",
-        }
-        }).showToast();
-    </script>
-@endif
-<script>
-    function newWindow(route)
-    {
-        var width = screen.width;
-        var height = screen.height;
+        function newWindow(route) {
+            var width = screen.width;
+            var height = screen.height;
 
-        window.open(route, '_blank', `width=${width},height=${height}`);
-    }
-</script>
+            window.open(route, '_blank', `width=${width},height=${height}`);
+        }
+    </script>
 
     @yield('page-js')
 </body>

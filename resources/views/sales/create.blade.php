@@ -23,7 +23,7 @@
                 </div><!--end row-->
                 <div class="card-body">
 
-                    <form action="{{ route('sale.store') }}" method="post">
+                    <form action="{{ route('sale.store') }}" method="post" enctype="multipart/form-data">
                         @csrf
                         <div id="scrap_purchase" class="modal fade" tabindex="-1" aria-labelledby="myModalLabel"
                             aria-hidden="true" style="display: none;">
@@ -68,7 +68,9 @@
                                     <select name="product" class="selectize" id="product">
                                         <option value=""></option>
                                         @foreach ($products as $product)
-                                            <option value="{{ $product->id }}">{{ $product->name }}</option>
+                                            <option value="{{ $product->id }}">{{ $product->name }}
+                                                ({{ $product->avail_qty }})
+                                                | {{ date('d-m-Y', strtotime($product->date)) }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -157,6 +159,12 @@
                                     <label for="paid">Paid Amount</label>
                                     <input type="number" name="paid" id="paid" value="0"
                                         class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <div class="form-group">
+                                    <label for="attachment">Attachment</label>
+                                    <input type="file" class="form-control" name="file">
                                 </div>
                             </div>
 

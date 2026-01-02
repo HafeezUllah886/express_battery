@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\attachment;
 use App\Models\products;
 use App\Models\purchase_details;
 use App\Models\ref;
@@ -123,6 +124,28 @@ function stockValue()
     }
 
     return $value;
+}
+
+function deleteAttachment($ref)
+{
+    $attachment = attachment::where('refID', $ref)->first();
+    if (file_exists(public_path($attachment->path))) {
+        unlink(public_path($attachment->path));
+    }
+    $attachment->delete();
+}
+
+function createAttachment($file, $ref)
+{
+    $filename = time() . '.' . $file->getClientOriginalExtension();
+    $file->move('attachments', $filename);
+
+    attachment::create(
+        [
+            'path' => "attachments/" . $filename,
+            'refID' => $ref,
+        ]
+    );
 }
 
 function productStockValue($id)

@@ -110,6 +110,10 @@ class PurchaseController extends Controller
                 ]
             );
 
+             if($request->has('file')){
+            createAttachment($request->file('file'), $ref);
+        }
+
             if($request->status == 'paid')
             {
                 purchase_payments::create(
@@ -186,12 +190,11 @@ class PurchaseController extends Controller
     public function edit(purchase $purchase)
     {
         $products = products::orderby('name', 'asc')->get();
-        $warehouses = warehouses::all();
         $vendors = accounts::customerVendor()->get();
         $accounts = accounts::business()->get();
         $cats = categories::orderBy('name', 'asc')->get();
 
-        return view('purchase.edit', compact('products', 'warehouses', 'vendors', 'accounts', 'purchase', 'cats'));
+        return view('purchase.edit', compact('products', 'vendors', 'accounts', 'purchase', 'cats'));
     }
 
     /**
@@ -223,8 +226,6 @@ class PurchaseController extends Controller
                 'vendorID'        => $request->vendorID,
                   'date'            => $request->date,
                   'notes'           => $request->notes,
-                  'discount'        => $request->discount,
-                  'dc'              => $request->dc,
                   'vendorName'      => $request->vendorName,
                   'payment_status'  => $request->status,
                   'inv'             => $request->inv,
@@ -239,7 +240,7 @@ class PurchaseController extends Controller
             {
                 if($request->qty[$key] > 0)
                 {
-                   $qty = $request->qty[$key];
+                $qty = $request->qty[$key];
                 $pprice = $request->pprice[$key];
                 $retail = $request->retail[$key];
                 $percentage = $request->percentage[$key];
@@ -250,22 +251,19 @@ class PurchaseController extends Controller
                     [
                         'purchaseID'    => $purchase->id,
                         'productID'     => $id,
-                        'pprice'        => $pprice,
                         'retail'        => $retail,
                         'percentage'    => $percentage,
+                        'pprice'        => $pprice,
                         'qty'           => $qty,
                         'amount'        => $amount,
                         'date'          => $request->date,
                         'refID'         => $ref,
-                        'warehouseID'   => $request->warehouse[$key],
                     ]
                 );
-                createStock($id, $qty, 0, $request->date, "Purchased", $ref, $request->warehouse[$key]);
-
                 }
             }
            
-             $net = ($total + $request->dc) - $request->discount;
+             $net = $total;
         
             $purchase->update(
                 [
@@ -273,6 +271,11 @@ class PurchaseController extends Controller
                     'total'       => $net,
                 ]
             );
+
+              if($request->has('file')){
+            createAttachment($request->file('file'), $ref);
+        }
+
 
             if($request->status == 'paid')
             {

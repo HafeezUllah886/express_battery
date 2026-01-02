@@ -21,6 +21,7 @@
                     <table class="table" id="buttons-datatables">
                         <thead>
                             <th>#</th>
+                            <th>Ref #</th>
                             <th>Inv #</th>
                             <th>Vendor</th>
                             <th>Date</th>
@@ -36,11 +37,14 @@
                                 @endphp
                                 <tr>
                                     <td>{{ $key + 1 }}</td>
-                                    <td>{{ $purchase->inv ?? "-" }}</td>
-                                    <td>{{ $purchase->vendorID != 3 ? $purchase->vendor->title : $purchase->vendorName . '(Walk-in)' }}</td>
+                                    <td><a href="{{ route('viewAttachment', $purchase->refID) }}"
+                                            target="_black">{{ $purchase->refID }} <i class="ri-attachment-2"></i></a></td>
+                                    <td>{{ $purchase->inv ?? '-' }}</td>
+                                    <td>{{ $purchase->vendorID != 3 ? $purchase->vendor->title : $purchase->vendorName . '(Walk-in)' }}
+                                    </td>
                                     <td>{{ date('d M Y', strtotime($purchase->date)) }}</td>
                                     <td>{{ number_format($amount) }}</td>
-                                  {{--   <td>{{ number_format($paid) }}</td>
+                                    {{--   <td>{{ number_format($paid) }}</td>
                                     <td>{{ number_format($due) }}</td> --}}
                                     <td>
                                         <div class="dropdown">
@@ -50,14 +54,16 @@
                                             </button>
                                             <ul class="dropdown-menu dropdown-menu-end">
                                                 <li>
-                                                    <button class="dropdown-item" onclick="newWindow('{{route('purchase.show', $purchase->id)}}')"
+                                                    <button class="dropdown-item"
+                                                        onclick="newWindow('{{ route('purchase.show', $purchase->id) }}')"
                                                         onclick=""><i
                                                             class="ri-eye-fill align-bottom me-2 text-muted"></i>
                                                         View
                                                     </button>
                                                 </li>
                                                 <li>
-                                                    <a class="dropdown-item" onclick="newWindow('{{route('purchase.edit', $purchase->id)}}')">
+                                                    <a class="dropdown-item"
+                                                        onclick="newWindow('{{ route('purchase.edit', $purchase->id) }}')">
                                                         <i class="ri-pencil-fill align-bottom me-2 text-muted"></i>
                                                         Edit
                                                     </a>
@@ -69,7 +75,8 @@
                                                     </a>
                                                 </li> --}}
                                                 <li>
-                                                    <a class="dropdown-item text-danger" href="{{route('purchases.delete', $purchase->id)}}">
+                                                    <a class="dropdown-item text-danger"
+                                                        href="{{ route('purchases.delete', $purchase->id) }}">
                                                         <i class="ri-delete-bin-2-fill align-bottom me-2 text-danger"></i>
                                                         Delete
                                                     </a>
@@ -82,30 +89,29 @@
                         </tbody>
                     </table>
                 </div>
-                
+
             </div>
         </div>
     </div>
     <!-- Default Modals -->
 @endsection
 @section('page-css')
-<link rel="stylesheet" href="{{ asset('assets/libs/datatable/datatable.bootstrap5.min.css') }}" />
-<!--datatable responsive css-->
-<link rel="stylesheet" href="{{ asset('assets/libs/datatable/responsive.bootstrap.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/libs/datatable/datatable.bootstrap5.min.css') }}" />
+    <!--datatable responsive css-->
+    <link rel="stylesheet" href="{{ asset('assets/libs/datatable/responsive.bootstrap.min.css') }}" />
 
-<link rel="stylesheet" href="{{ asset('assets/libs/datatable/buttons.dataTables.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/libs/datatable/buttons.dataTables.min.css') }}">
 @endsection
 @section('page-js')
-    <script src="{{ asset('assets/libs/datatable/jquery.dataTables.min.js')}}"></script>
-    <script src="{{ asset('assets/libs/datatable/dataTables.bootstrap5.min.js')}}"></script>
-    <script src="{{ asset('assets/libs/datatable/dataTables.responsive.min.js')}}"></script>
-    <script src="{{ asset('assets/libs/datatable/dataTables.buttons.min.js')}}"></script>
-    <script src="{{ asset('assets/libs/datatable/buttons.print.min.js')}}"></script>
-    <script src="{{ asset('assets/libs/datatable/buttons.html5.min.js')}}"></script>
-    <script src="{{ asset('assets/libs/datatable/vfs_fonts.js')}}"></script>
-    <script src="{{ asset('assets/libs/datatable/pdfmake.min.js')}}"></script>
-    <script src="{{ asset('assets/libs/datatable/jszip.min.js')}}"></script>
+    <script src="{{ asset('assets/libs/datatable/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('assets/libs/datatable/dataTables.bootstrap5.min.js') }}"></script>
+    <script src="{{ asset('assets/libs/datatable/dataTables.responsive.min.js') }}"></script>
+    <script src="{{ asset('assets/libs/datatable/dataTables.buttons.min.js') }}"></script>
+    <script src="{{ asset('assets/libs/datatable/buttons.print.min.js') }}"></script>
+    <script src="{{ asset('assets/libs/datatable/buttons.html5.min.js') }}"></script>
+    <script src="{{ asset('assets/libs/datatable/vfs_fonts.js') }}"></script>
+    <script src="{{ asset('assets/libs/datatable/pdfmake.min.js') }}"></script>
+    <script src="{{ asset('assets/libs/datatable/jszip.min.js') }}"></script>
 
     <script src="{{ asset('assets/js/pages/datatables.init.js') }}"></script>
 @endsection
-

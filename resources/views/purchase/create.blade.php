@@ -43,7 +43,7 @@
                             </div>
                         </div>
                     </div>
-                    <form action="{{ route('purchase.store') }}" method="post">
+                    <form action="{{ route('purchase.store') }}" method="post" enctype="multipart/form-data">
                         @csrf
                         <div class="row">
 
@@ -117,6 +117,12 @@
                                         <option value="paid">Paid</option>
                                         <option disabled value="pending">Pending</option>
                                     </select>
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <div class="form-group">
+                                    <label for="attachment">Attachment</label>
+                                    <input type="file" class="form-control" name="file">
                                 </div>
                             </div>
                             <div class="col-12 mt-2">

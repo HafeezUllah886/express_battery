@@ -13,74 +13,21 @@
                             <th>Product</th>
                             <th>Category</th>
                             <th>Stock</th>
-                            <th>Action</th>
+                            {{-- <th>Action</th> --}}
                         </thead>
                         <tbody>
                             @foreach ($products as $key => $product)
-                                @php
-                                    $stock = getStock($product->id);
-                                @endphp
-                                @php
-                                $stock = getStock($product->id);
-                            @endphp
-                            @if (request('zero') == 'allowed')
-                                @if ($stock == 0)
-                                    <tr>
-                                        <td>{{ $key + 1 }}</td>
-                                        <td>{{ $product->name }}</td>
-                                        <td>{{ $product->category->name }}</td>
-                                        <td>{{ number_format($stock, 2) }}</td>
-                                        <td>
-                                            <button class="btn btn-info" onclick="ViewDetails({{ $product->id }})">
-                                                Details
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    
-                                @endif
-                            @elseif (request('zero') == 'above_zero')
-                                @if ($stock > 0)
-                                    <tr>
-                                        <td>{{ $key + 1 }}</td>
-                                        <td>{{ $product->name }}</td>
-                                        <td>{{ $product->category->name }}</td>
-                                        <td>{{ number_format($stock, 2) }}</td>
-                                        <td>
-                                            <button class="btn btn-info" onclick="ViewDetails({{ $product->id }})">
-                                                Details
-                                            </button>
-                                        </td>
-                                    </tr>
-                                @endif
-                                @elseif (request('zero') == 'below_zero')
-                                @if ($stock < 0)
-                                    <tr>
-                                        <td>{{ $key + 1 }}</td>
-                                        <td>{{ $product->name }}</td>
-                                        <td>{{ $product->category->name }}</td>
-                                        <td>{{ number_format($stock, 2) }}</td>
-                                        <td>
-                                            <button class="btn btn-info" onclick="ViewDetails({{ $product->id }})">
-                                                Details
-                                            </button>
-                                        </td>
-                                    </tr>
-                                @endif
-                            @else
-                                @if ($stock != 0)
-                                    <tr>
-                                        <td>{{ $key + 1 }}</td>
-                                        <td>{{ $product->name }}</td>
-                                        <td>{{ $product->category->name }}</td>
-                                        <td>{{ number_format($stock, 2) }}</td>
-                                        <td>
-                                            <button class="btn btn-info" onclick="ViewDetails({{ $product->id }})">
-                                                Details
-                                            </button>
-                                        </td>
-                                    </tr>
-                                @endif
-                            @endif
+                                <tr>
+                                    <td>{{ $key + 1 }}</td>
+                                    <td>{{ $product->name }}</td>
+                                    <td>{{ $product->category->name }}</td>
+                                    <td>{{ number_format($product->stock, 2) }}</td>
+                                    {{-- <td>
+                                        <button class="btn btn-info" onclick="ViewDetails({{ $product->id }})">
+                                            Details
+                                        </button>
+                                    </td> --}}
+                                </tr>
                             @endforeach
                         </tbody>
                     </table>
@@ -89,7 +36,7 @@
         </div>
     </div>
 
-    <div id="viewDetailsModal" class="modal fade" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true"
+    {{--  <div id="viewDetailsModal" class="modal fade" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true"
         style="display: none;">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -131,7 +78,7 @@
                 </form>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
+    </div><!-- /.modal --> --}}
 @endsection
 
 @section('page-css')

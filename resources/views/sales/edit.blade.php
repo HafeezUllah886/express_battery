@@ -30,7 +30,7 @@
                 </div>
 
                 <div class="card-body">
-                    <form action="{{ route('sale.update', $sale->id) }}" method="post">
+                    <form action="{{ route('sale.update', $sale->id) }}" method="post" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
                         <div id="scrap_purchase" class="modal fade" tabindex="-1" aria-labelledby="myModalLabel"
@@ -89,7 +89,9 @@
                                     <select name="product" class="selectize" id="product">
                                         <option value=""></option>
                                         @foreach ($products as $product)
-                                            <option value="{{ $product->id }}">{{ $product->name }}</option>
+                                            <option value="{{ $product->id }}">{{ $product->name }}
+                                                ({{ $product->avail_qty }})
+                                                | {{ date('d-m-Y', strtotime($product->date)) }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -99,10 +101,9 @@
                                 <table class="table table-striped table-hover">
                                     <thead>
                                         <th width="20%">Product</th>
-                                        <th class="text-center">Warehouse</th>
-                                        <th class="text-center">Qty</th>
                                         <th class="text-center">Retail</th>
-                                        <th class="text-center">Percentage</th>
+                                        <th class="text-center">Sale Percentage</th>
+                                        <th class="text-center">Qty</th>
                                         <th class="text-center">Price</th>
                                         <th class="text-center">Amount</th>
                                         <th></th>
@@ -115,16 +116,16 @@
                                             @endphp
                                             <tr id="row_{{ $id }}">
                                                 <td class="no-padding">{{ $product->product->name }}</td>
-                                                <td class="no-padding"><select name="warehouse[]"
+                                                <td class="no-padding"><input type="number" name="retail[]" readonly
+                                                        oninput="updateChanges({{ $id }})" step="any"
+                                                        value="{{ $product->retail }}" min="1"
                                                         class="form-control text-center no-padding"
-                                                        id="warehouse_{{ $id }}">
-                                                        @foreach ($warehouses as $warehouse)
-                                                            <option value="{{ $warehouse->id }}"
-                                                                @selected($warehouse->id == $product->warehouseID)>{{ $warehouse->name }}
-                                                            </option>
-                                                        @endforeach
-                                                    </select></td>
-
+                                                        id="retail_{{ $id }}"></td>
+                                                <td class="no-padding"><input type="number" name="sale_percentage[]"
+                                                        oninput="updateChanges({{ $id }})" step="any"
+                                                        value="{{ $product->sale_percentage }}"
+                                                        class="form-control text-center no-padding"
+                                                        id="sale_percentage_{{ $id }}"></td>
                                                 <td class="no-padding">
                                                     <div class="input-group"><span class="input-group-text no-padding"
                                                             id="stockValue_{{ $id }}">{{ $stock }}</span><input
@@ -134,78 +135,66 @@
                                                             class="form-control text-center no-padding"
                                                             id="qty_{{ $id }}"></div>
                                                 </td>
-                                                <td class="no-padding"><input type="number" name="retail[]" required
-                                                        step="any" value="{{ $product->retail }}" min="0"
+                                                <td class="no-padding"><input type="number" name="price[]"
+                                                        oninput="updateChanges({{ $id }})" step="any"
+                                                        value="{{ $product->price }}" min="1"
                                                         class="form-control text-center no-padding"
-                                                        oninput="updateChanges({{ $id }})"
-                                                        id="retail_{{ $id }}"></td>
-                                                <td class="no-padding"><input type="number" name="percentage[]" required
-                                                        step="any" value="{{ $product->percentage }}" min="0"
-                                                        class="form-control text-center no-padding"
-                                                        oninput="updateChanges({{ $id }})"
-                                                        id="percentage_{{ $id }}"></td>
-                                                <td class="no-padding"><input type="number" name="price[]" required
-                                                        step="any" value="{{ $product->price }}" min="0"
-                                                        class="form-control text-center no-padding"
-                                                        oninput="updateChanges({{ $id }})"
                                                         id="price_{{ $id }}"></td>
-                                                <td class="no-padding"><input type="number" name="amount[]"
-                                                        min="0.1" readonly required step="any"
-                                                        value="{{ $product->amount }}"
+                                                <td class="no-padding"><input type="number" name="amount[]" readonly
+                                                        step="any" value="{{ $product->amount }}" min="0"
                                                         class="form-control text-center no-padding"
                                                         id="amount_{{ $id }}"></td>
                                                 <td class="no-padding"> <span class="btn btn-sm btn-danger"
                                                         onclick="deleteRow({{ $id }})">X</span> </td>
                                                 <input type="hidden" name="id[]" value="{{ $id }}">
+                                                <input type="hidden" name="productID[]"
+                                                    value="{{ $product->productID }}">
+                                                <input type="hidden" id="stock_{{ $id }}"
+                                                    value="{{ $stock }}">
+                                                <input type="hidden" name="purchase_percentage[]"
+                                                    id="purchase_percentage_{{ $id }}"
+                                                    value="{{ $product->purchase_percentage }}">
+                                                <input type="hidden" name="extra_tax[]"
+                                                    id="extra_tax_{{ $id }}"
+                                                    value="{{ $product->extra_tax }}">
+                                                <input type="hidden" name="pprice[]" id="pprice_{{ $id }}"
+                                                    value="{{ $product->pprice }}">
+                                                <input type="hidden" name="profit[]" id="profit_{{ $id }}"
+                                                    value="{{ $product->profit }}">
                                             </tr>
                                         @endforeach
                                     </tbody>
                                     <tfoot>
                                         <tr>
-                                            <th colspan="6" class="text-end">Total</th>
+                                            <th colspan="5" class="text-end">Total</th>
                                             <th class="text-end" id="totalAmount">0.00</th>
                                         </tr>
                                     </tfoot>
                                 </table>
                             </div>
 
-                            <div class="col-3">
+                            <div class="col-2">
                                 <div class="form-group">
                                     <label for="scrap_amount">Scrap Amount</label>
                                     <input type="number" name="scrap_amount" oninput="updateTotal()" id="scrap_amount"
                                         value="{{ $sale->scrap_amount }}" step="any" class="form-control no_zero">
                                 </div>
                             </div>
-                            <div class="col-3">
-                                <div class="form-group">
-                                    <label for="discount">Discount</label>
-                                    <input type="number" name="discount" oninput="updateTotal()" id="discount"
-                                        value="{{ $sale->discount }}" step="any" class="form-control no_zero">
-                                </div>
-                            </div>
-                            <div class="col-3">
-                                <div class="form-group">
-                                    <label for="dc">Delivery Charges</label>
-                                    <input type="number" name="dc" id="dc" oninput="updateTotal()"
-                                        min="0" value="{{ $sale->dc }}" step="any"
-                                        class="form-control no_zero">
-                                </div>
-                            </div>
-                            <div class="col-3">
+                            <div class="col-2">
                                 <div class="form-group">
                                     <label for="net">Net Amount</label>
                                     <input type="number" name="net" id="net" step="any" readonly
                                         value="{{ $sale->total }}" class="form-control">
                                 </div>
                             </div>
-                            <div class="col-3 mt-2">
+                            <div class="col-2">
                                 <div class="form-group">
                                     <label for="date">Date</label>
                                     <input type="date" name="date" id="date" value="{{ $sale->date }}"
                                         class="form-control">
                                 </div>
                             </div>
-                            <div class="col-3 mt-2">
+                            <div class="col-2">
                                 <div class="form-group">
                                     <label for="customer">Customer</label>
                                     <select name="customerID" id="customerID" class="selectize1">
@@ -222,7 +211,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-3 mt-2">
+                            <div class="col-2">
                                 <div class="form-group">
                                     <label for="account">Account</label>
                                     <select name="accountID" id="account" class="selectize1">
@@ -232,7 +221,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-3 mt-2">
+                            <div class="col-2">
                                 <div class="form-group">
                                     <label for="status">Payment Status</label>
                                     <select name="status" id="status1" class="selectize1">
@@ -246,6 +235,12 @@
                                     <label for="paid">Paid Amount</label>
                                     <input type="number" name="paid" id="paid" value="{{ $sale->payment }}"
                                         class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <div class="form-group">
+                                    <label for="attachment">Attachment</label>
+                                    <input type="file" class="form-control" name="file">
                                 </div>
                             </div>
 
@@ -296,7 +291,6 @@
 
             },
         });
-        var warehouses = @json($warehouses);
 
         function getSingleProduct(id) {
             $.ajax({
@@ -312,41 +306,49 @@
                         var id = product.id;
                         var html = '<tr id="row_' + id + '">';
                         html += '<td class="no-padding">' + product.name + '</td>';
+
                         html +=
-                            '<td class="no-padding"><select name="warehouse[]" class="form-control text-center no-padding" id="warehouse_' +
-                            id + '">';
-                        warehouses.forEach(function(warehouse) {
-                            html += '<option value="' + warehouse.id + '" >' + warehouse.name +
-                                '</option>';
-                        });
-                        html += '</select></td>';
+                            '<td class="no-padding"><input type="number" name="retail[]" readonly oninput="updateChanges(' +
+                            id + ')" step="any" value="' + product.retail +
+                            '" min="1" class="form-control text-center no-padding" id="retail_' + id +
+                            '"></td>';
+                        html +=
+                            '<td class="no-padding"><input type="number" name="sale_percentage[]" oninput="updateChanges(' +
+                            id +
+                            ')" step="any" value="' + product.sale_percentage +
+                            '" class="form-control text-center no-padding" id="sale_percentage_' +
+                            id +
+                            '"></td>';
                         html +=
                             '<td class="no-padding"><div class="input-group"><span class="input-group-text no-padding" id="stockValue_' +
-                            id + '">' + product.stock + '</span><input type="number" max="' + product.stock +
-                            '" name="qty[]" oninput="updateChanges(' + id +
+                            id + '">' + product.stock +
+                            '</span><input type="number" max="" name="qty[]" oninput="updateChanges(' + id +
                             ')" min="0" required step="any" value="1" class="form-control text-center no-padding" id="qty_' +
                             id + '"></div></td>';
                         html +=
-                            '<td class="no-padding"><input type="number" name="retail[]" oninput="updateChanges(' +
-                            id + ')" required step="any" value="' + product.price +
-                            '" min="1" class="form-control text-center" id="retail_' + id + '"></td>';
-                        html +=
-                            '<td class="no-padding"><input type="number" name="percentage[]" oninput="updateChanges(' +
-                            id +
-                            ')" required step="any" value="' + product.percentage +
-                            '" min="1" class="form-control text-center" id="percentage_' +
-                            id + '"></td>';
-                        html +=
                             '<td class="no-padding"><input type="number" name="price[]" oninput="updateChanges(' +
-                            id + ')" required step="any" value="' + product.price +
-                            '" min="1" class="form-control text-center" id="price_' + id + '"></td>';
-                        html +=
-                            '<td class="no-padding"><input type="number" name="amount[]" readonly step="any" value="0.00" min="0" class="form-control text-center" id="amount_' +
+                            id +
+                            ')" step="any" value="0" min="1" class="form-control text-center no-padding" id="price_' +
                             id + '"></td>';
-                        html += '<td> <span class="btn btn-sm btn-danger" onclick="deleteRow(' + id +
-                            ')">X</span> </td>';
+                        html +=
+                            '<td class="no-padding"><input type="number" name="amount[]" readonly step="any" value="0.00" min="0" class="form-control text-center no-padding" id="amount_' +
+                            id + '"></td>';
+                        html +=
+                            '<td class="no-padding"> <span class="btn btn-sm btn-danger" onclick="deleteRow(' +
+                            id + ')">X</span> </td>';
                         html += '<input type="hidden" name="id[]" value="' + id + '">';
+                        html += '<input type="hidden" name="productID[]" value="' + product.productID + '">';
                         html += '<input type="hidden" id="stock_' + id + '" value="' + product.stock + '">';
+                        html += '<input type="hidden" name="purchase_percentage[]" id="purchase_percentage_' +
+                            id + '" value="' + product
+                            .percentage + '">';
+                        html += '<input type="hidden" name="extra_tax[]" id="extra_tax_' + id + '" value="' +
+                            product.extra_tax +
+                            '">';
+                        html += '<input type="hidden" name="pprice[]" id="pprice_' + id + '" value="' + product
+                            .pprice +
+                            '">';
+                        html += '<input type="hidden" name="profit[]" id="profit_' + id + '" value="0">';
                         html += '</tr>';
                         $("#products_list").prepend(html);
                         updateChanges(id);
@@ -357,17 +359,36 @@
         }
 
         function updateChanges(id) {
-            var retail = $('#retail_' + id).val();
-            var percentage = $('#percentage_' + id).val();
-            var stock = $('#stock_' + id).val();
-            var value = retail - (retail * percentage / 100);
+
+            var retail = parseFloat($('#retail_' + id).val());
+            var percentage = parseFloat($('#sale_percentage_' + id).val());
+            var stock = parseFloat($('#stock_' + id).val());
+            var extra_tax = parseFloat($('#extra_tax_' + id).val());
+            var extra_tax_value = parseFloat(retail * extra_tax / 100);
+
+            if (percentage > 18) {
+                var percentagewithouttax = parseFloat(percentage - 18);
+                var value = retail - (retail * percentagewithouttax / 100) + extra_tax_value;
+            } else if (percentage < 18) {
+                var difference = parseFloat(18 - percentage);
+                var percentagewithouttax = parseFloat(percentage + difference);
+                var value = parseFloat(retail + (retail * difference / 100)) + extra_tax_value;
+            } else {
+                var percentagewithouttax = parseFloat(percentage);
+                var value = parseFloat(retail + extra_tax_value);
+            }
+
+            var profit = value - parseFloat($('#pprice_' + id).val());
+
+            $("#stockValue_" + id).text(stock);
             $("#qty_" + id).attr("max", stock);
             var qty = $('#qty_' + id).val();
+            $('#price_' + id).val(value);
+            $('#profit_' + id).val(profit);
 
             var amount = value * qty;
 
-            $("#amount_" + id).val(amount);
-            $("#price_" + id).val(value);
+            $("#amount_" + id).val(amount.toFixed(0));
 
             updateTotal();
         }
@@ -382,12 +403,9 @@
                 totalAmount += parseFloat(inputValue);
             });
             $("#totalAmount").html(totalAmount.toFixed(2));
-
-            var discount = parseFloat($("#discount").val());
-            var dc = parseFloat($("#dc").val());
             var scrap_amount = parseFloat($("#scrap_amount").val());
 
-            var net = (totalAmount + dc) - discount - scrap_amount;
+            var net = totalAmount - scrap_amount;
 
             $("#net").val(net);
         }

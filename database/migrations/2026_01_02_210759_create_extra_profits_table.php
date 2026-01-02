@@ -11,18 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('sales', function (Blueprint $table) {
+        Schema::create('extra_profits', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('customerID')->constrained('accounts', 'id');
-            $table->string('customerName')->nullable();
+            $table->foreignId('accountID')->constrained('accounts', 'id');
+            $table->string('from');
             $table->date('date');
-            $table->float('discount')->default(0);
-            $table->float('dc')->default(0);
-            $table->float('total')->default(0);
+            $table->float('amount');
             $table->text('notes')->nullable();
-            $table->float('scrap_amount')->default(0);
-            $table->string('payment_status')->nullable();
-            $table->float('payment')->nullable();
             $table->bigInteger('refID');
             $table->timestamps();
         });
@@ -33,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('sales');
+        Schema::dropIfExists('extra_profits');
     }
 };

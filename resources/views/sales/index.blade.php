@@ -43,6 +43,7 @@
                     <table class="table" id="buttons-datatables">
                         <thead>
                             <th>#</th>
+                            <th>Ref #</th>
                             <th>Inv #</th>
                             <th>Customer</th>
                             <th>Date</th>
@@ -58,6 +59,8 @@
                                 @endphp
                                 <tr>
                                     <td>{{ $key + 1 }}</td>
+                                    <td><a href="{{ route('viewAttachment', $sale->refID) }}"
+                                            target="_black">{{ $sale->refID }} <i class="ri-attachment-2"></i></a></td>
                                     <td>{{ $sale->id }}</td>
                                     <td>{{ $sale->customerID != 2 ? $sale->customer->title : $sale->customerName . '(Walk-in)' }}
                                     </td>
