@@ -34,7 +34,8 @@
                             @foreach ($extra_profits as $key => $tran)
                                 <tr>
                                     <td>{{ $key + 1 }}</td>
-                                    <td>{{ $tran->refID }}</td>
+                                    <td><a href="{{ route('viewAttachment', $tran->refID) }}"
+                                            target="_black">{{ $tran->refID }} <i class="ri-attachment-2"></i></a></td>
                                     <td>{{ $tran->from }}</td>
                                     <td>{{ $tran->account->title }}</td>
                                     <td>{{ date('d M Y', strtotime($tran->date)) }}</td>
@@ -83,7 +84,7 @@
                     <h5 class="modal-title" id="myModalLabel">Create Extra Profit</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"> </button>
                 </div>
-                <form action="{{ route('extra_profit.store') }}" method="post">
+                <form action="{{ route('extra_profit.store') }}" method="post" enctype="multipart/form-data">
                     @csrf
                     <div class="modal-body">
                         <div class="form-group mt-2">
@@ -108,6 +109,10 @@
                             <label for="date">Date</label>
                             <input type="date" name="date" required id="date" value="{{ date('Y-m-d') }}"
                                 class="form-control">
+                        </div>
+                        <div class="form-group mt-2">
+                            <label for="attachment">Attachment</label>
+                            <input type="file" class="form-control" name="file">
                         </div>
                         <div class="form-group mt-2">
                             <label for="notes">Notes</label>

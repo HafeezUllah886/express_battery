@@ -6221,12 +6221,12 @@ namespace App\Models {
     /**
      * App\Models\sales
      *
-     * @property float $scrap_amount
      * @property \Illuminate\Support\Carbon|null $updated_at
      * @property \Illuminate\Support\Carbon|null $created_at
      * @property int $refID
      * @property float|null $payment
      * @property string|null $payment_status
+     * @property float $scrap_amount
      * @property string|null $notes
      * @property float $total
      * @property float $dc
@@ -6248,12 +6248,12 @@ namespace App\Models {
      * @method static \Illuminate\Database\Eloquent\Builder<sales>|sales whereDc($value)
      * @method static \Illuminate\Database\Eloquent\Builder<sales>|sales whereTotal($value)
      * @method static \Illuminate\Database\Eloquent\Builder<sales>|sales whereNotes($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<sales>|sales whereScrapAmount($value)
      * @method static \Illuminate\Database\Eloquent\Builder<sales>|sales wherePaymentStatus($value)
      * @method static \Illuminate\Database\Eloquent\Builder<sales>|sales wherePayment($value)
      * @method static \Illuminate\Database\Eloquent\Builder<sales>|sales whereRefid($value)
      * @method static \Illuminate\Database\Eloquent\Builder<sales>|sales whereCreatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<sales>|sales whereUpdatedAt($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<sales>|sales whereScrapAmount($value)
      * @method static \Illuminate\Database\Eloquent\Builder<sales>|sales newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<sales>|sales newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<sales>|sales query()

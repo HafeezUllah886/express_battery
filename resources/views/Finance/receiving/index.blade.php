@@ -10,14 +10,14 @@
                 </div>
                 <div class="card-body">
                     @if ($errors->any())
-                    <div class="alert alert-danger">
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
 
                     <table class="table" id="buttons-datatables">
                         <thead>
@@ -34,7 +34,8 @@
                             @foreach ($receivings as $key => $tran)
                                 <tr>
                                     <td>{{ $key + 1 }}</td>
-                                    <td>{{ $tran->refID }}</td>
+                                    <td><a href="{{ route('viewAttachment', $tran->refID) }}"
+                                            target="_black">{{ $tran->refID }} <i class="ri-attachment-2"></i></a></td>
                                     <td>{{ $tran->fromAccount->title }}</td>
                                     <td>{{ $tran->receivedBy->name }}</td>
                                     <td>{{ date('d M Y', strtotime($tran->date)) }}</td>
@@ -48,14 +49,16 @@
                                             </button>
                                             <ul class="dropdown-menu dropdown-menu-end">
                                                 <li>
-                                                    <button class="dropdown-item" onclick="newWindow('{{route('receivings.show', $tran->id)}}')"
+                                                    <button class="dropdown-item"
+                                                        onclick="newWindow('{{ route('receivings.show', $tran->id) }}')"
                                                         onclick=""><i
                                                             class="ri-eye-fill align-bottom me-2 text-muted"></i>
                                                         View
                                                     </button>
                                                 </li>
                                                 <li>
-                                                    <a class="dropdown-item text-danger" href="{{route('receiving.delete', $tran->refID)}}">
+                                                    <a class="dropdown-item text-danger"
+                                                        href="{{ route('receiving.delete', $tran->refID) }}">
                                                         <i class="ri-delete-bin-2-fill align-bottom me-2 text-danger"></i>
                                                         Delete
                                                     </a>
@@ -81,7 +84,7 @@
                     <h5 class="modal-title" id="myModalLabel">Create Receipt</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"> </button>
                 </div>
-                <form action="{{ route('receivings.store') }}" method="post">
+                <form action="{{ route('receivings.store') }}" method="post" enctype="multipart/form-data">
                     @csrf
                     <div class="modal-body">
                         <div class="form-group mt-2">
@@ -113,6 +116,10 @@
                                 class="form-control">
                         </div>
                         <div class="form-group mt-2">
+                            <label for="attachment">Attachment</label>
+                            <input type="file" class="form-control" name="file">
+                        </div>
+                        <div class="form-group mt-2">
                             <label for="notes">Notes</label>
                             <textarea name="notes" required id="notes" cols="30" class="form-control" rows="5"></textarea>
                         </div>
@@ -127,16 +134,16 @@
     </div><!-- /.modal -->
 @endsection
 @section('page-css')
-<link rel="stylesheet" href="{{ asset('assets/libs/datatable/datatable.bootstrap5.min.css') }}" />
-<!--datatable responsive css-->
-<link rel="stylesheet" href="{{ asset('assets/libs/datatable/responsive.bootstrap.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/libs/datatable/datatable.bootstrap5.min.css') }}" />
+    <!--datatable responsive css-->
+    <link rel="stylesheet" href="{{ asset('assets/libs/datatable/responsive.bootstrap.min.css') }}" />
 
-<link rel="stylesheet" href="{{ asset('assets/libs/datatable/buttons.dataTables.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/libs/datatable/buttons.dataTables.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/libs/selectize/selectize.min.css') }}">
 @endsection
 
 @section('page-js')
-<script src="{{ asset('assets/libs/datatable/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('assets/libs/datatable/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('assets/libs/datatable/dataTables.bootstrap5.min.js') }}"></script>
     <script src="{{ asset('assets/libs/datatable/dataTables.responsive.min.js') }}"></script>
     <script src="{{ asset('assets/libs/datatable/dataTables.buttons.min.js') }}"></script>
@@ -152,21 +159,17 @@
     <script>
         $(".selectize").selectize();
 
-        function getBalance()
-        {
+        function getBalance() {
             var id = $("#fromID").find(":selected").val();
             $.ajax({
                 url: "{{ url('/accountbalance/') }}/" + id,
                 method: 'GET',
                 success: function(response) {
                     $("#accountBalance").html(response.data);
-                    if(response.data > 0)
-                    {
+                    if (response.data > 0) {
                         $("#accountBalance").addClass('text-success');
                         $("#accountBalance").removeClass('text-danger');
-                    }
-                    else
-                    {
+                    } else {
                         $("#accountBalance").addClass('text-danger');
                         $("#accountBalance").removeClass('text-success');
                     }

@@ -7,17 +7,19 @@
                     <div class="col-md-5">
                         <div class="input-group mb-3">
                             <span class="input-group-text" id="basic-addon1">From</span>
-                            <input type="date" class="form-control" placeholder="Username" name="start" value="{{$start}}" aria-label="Username" aria-describedby="basic-addon1">
+                            <input type="date" class="form-control" placeholder="Username" name="start"
+                                value="{{ $start }}" aria-label="Username" aria-describedby="basic-addon1">
                         </div>
                     </div>
                     <div class="col-md-5">
                         <div class="input-group mb-3">
                             <span class="input-group-text" id="basic-addon1">To</span>
-                            <input type="date" class="form-control" placeholder="Username" name="end" value="{{$end}}" aria-label="Username" aria-describedby="basic-addon1">
+                            <input type="date" class="form-control" placeholder="Username" name="end"
+                                value="{{ $end }}" aria-label="Username" aria-describedby="basic-addon1">
                         </div>
                     </div>
                     <div class="col-md-2">
-                       <input type="submit" value="Filter" class="btn btn-success w-100">
+                        <input type="submit" value="Filter" class="btn btn-success w-100">
                     </div>
                 </div>
             </form>
@@ -29,14 +31,14 @@
                 </div>
                 <div class="card-body">
                     @if ($errors->any())
-                    <div class="alert alert-danger">
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
 
                     <table class="table" id="buttons-datatables">
                         <thead>
@@ -53,7 +55,8 @@
                             @foreach ($transfers as $key => $tran)
                                 <tr>
                                     <td>{{ $key + 1 }}</td>
-                                    <td>{{ $tran->refID }}</td>
+                                    <td><a href="{{ route('viewAttachment', $tran->refID) }}"
+                                            target="_black">{{ $tran->refID }} <i class="ri-attachment-2"></i></a></td>
                                     <td>{{ $tran->fromAccount->title }}</td>
                                     <td>{{ $tran->toAccount->title }}</td>
                                     <td>{{ date('d M Y', strtotime($tran->date)) }}</td>
@@ -65,7 +68,6 @@
                                         <a class="btn btn-info " href="{{ route('transfers.edit', $tran->id) }}">Edit</a>
                                     </td>
                                 </tr>
-                               
                             @endforeach
                         </tbody>
                     </table>
@@ -83,7 +85,7 @@
                     <h5 class="modal-title" id="myModalLabel">Create Transfer</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"> </button>
                 </div>
-                <form action="{{ route('transfers.store') }}" method="post">
+                <form action="{{ route('transfers.store') }}" method="post" enctype="multipart/form-data">
                     @csrf
                     <div class="modal-body">
                         <div class="form-group mt-2">
@@ -115,6 +117,10 @@
                                 class="form-control">
                         </div>
                         <div class="form-group mt-2">
+                            <label for="attachment">Attachment</label>
+                            <input type="file" class="form-control" name="file">
+                        </div>
+                        <div class="form-group mt-2">
                             <label for="notes">Notes</label>
                             <textarea name="notes" id="notes" cols="30" class="form-control" rows="5"></textarea>
                         </div>
@@ -130,16 +136,16 @@
     </div><!-- /.modal -->
 @endsection
 @section('page-css')
-<link rel="stylesheet" href="{{ asset('assets/libs/datatable/datatable.bootstrap5.min.css') }}" />
-<!--datatable responsive css-->
-<link rel="stylesheet" href="{{ asset('assets/libs/datatable/responsive.bootstrap.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/libs/datatable/datatable.bootstrap5.min.css') }}" />
+    <!--datatable responsive css-->
+    <link rel="stylesheet" href="{{ asset('assets/libs/datatable/responsive.bootstrap.min.css') }}" />
 
-<link rel="stylesheet" href="{{ asset('assets/libs/datatable/buttons.dataTables.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/libs/datatable/buttons.dataTables.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/libs/selectize/selectize.min.css') }}">
 @endsection
 
 @section('page-js')
-<script src="{{ asset('assets/libs/datatable/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('assets/libs/datatable/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('assets/libs/datatable/dataTables.bootstrap5.min.js') }}"></script>
     <script src="{{ asset('assets/libs/datatable/dataTables.responsive.min.js') }}"></script>
     <script src="{{ asset('assets/libs/datatable/dataTables.buttons.min.js') }}"></script>

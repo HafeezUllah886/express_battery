@@ -49,6 +49,9 @@ class ExtraProfitController extends Controller
 
             createTransaction($request->accountID, $request->date, $request->amount, 0, "Extra Profit from " . $request->from . "<br>" . $request->notes, $ref, "Extra Profit");
 
+            if($request->has('file')){
+                createAttachment($request->file('file'), $ref);
+            }
             DB::commit();
             return back()->with('success', 'Extra Profit Saved');
         }
