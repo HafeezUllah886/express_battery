@@ -54,6 +54,7 @@
                                         <tr class="table-active">
                                             <th scope="col" style="width: 50px;">#</th>
                                             <th scope="col" class="text-start">Product</th>
+                                            <th scope="col" class="text-start">Weight</th>
                                             <th scope="col" class="text-end">Qty</th>
                                             <th scope="col" class="text-end">Price</th>
                                             <th scope="col" class="text-end">Amount</th>
@@ -65,6 +66,8 @@
                                                 <td class="m-1 p-1 border-1 border-dark">{{ $key + 1 }}</td>
                                                 <td class="text-start m-1 p-1 border-1 border-dark">
                                                     {{ $product->product->name }}</td>
+                                                <td class="text-start m-1 p-1 border-1 border-dark">
+                                                    {{ $product->product->weight * $product->qty }} Kgs</td>
 
                                                 <td class="text-end m-1 p-1 border-1 border-dark">
                                                     {{ number_format($product->qty) }}</td>
@@ -81,39 +84,39 @@
                                             $paid = $sale->payments->sum('amount');
                                         @endphp
                                         <tr class="border-1 border-dark">
-                                            <th colspan="2" class="text-end">Total</th>
+                                            <th colspan="3" class="text-end">Total</th>
                                             <th class="text-end">{{ $sale->details->sum('qty') }}</th>
                                             <th></th>
                                             <th class="text-end">{{ number_format($sale->details->sum('amount'), 2) }}</th>
                                         </tr>
 
                                         <tr class="m-0 p-0">
-                                            <th colspan="4" class="text-end p-0 m-0">Scrap Amount (-)</th>
+                                            <th colspan="5" class="text-end p-0 m-0">Scrap Amount (-)</th>
                                             <th class="text-end p-0 m-0 ">{{ number_format($sale->scrap_amount, 2) }}</th>
                                         </tr>
 
                                         <tr class="m-0 p-0">
-                                            <th colspan="4" class="text-end p-0 m-0">Net Bill</th>
+                                            <th colspan="5" class="text-end p-0 m-0">Net Bill</th>
                                             <th class="text-end p-0 m-0 border-2 border-start-0 border-end-0 border-dark">
                                                 {{ number_format($sale->total, 2) }}</th>
                                         </tr>
                                         <tr class="m-0 p-0">
-                                            <th colspan="4" class="text-end p-0 m-0">Paid</th>
+                                            <th colspan="5" class="text-end p-0 m-0">Paid</th>
                                             <th class="text-end p-0 m-0">{{ number_format($paid, 2) }}</th>
                                         </tr>
                                         <tr class="m-0 p-0">
-                                            <th colspan="4" class="text-end p-0 m-0">Due</th>
+                                            <th colspan="5" class="text-end p-0 m-0">Due</th>
                                             <th class="text-end p-0 m-0">{{ number_format($due, 2) }}</th>
                                         </tr>
                                         @if ($sale->customerID != 2)
                                             <tr class="m-0 p-0">
-                                                <th colspan="4" class="text-end p-0 m-0">Previous Balance</th>
+                                                <th colspan="5" class="text-end p-0 m-0">Previous Balance</th>
                                                 <th class="text-end p-0 m-0">
                                                     {{ number_format(spotBalanceBefore($sale->customerID, $sale->refID), 2) }}
                                                 </th>
                                             </tr>
                                             <tr class="m-0 p-0">
-                                                <th colspan="4" class="text-end p-0 m-0">Net Account Balance</th>
+                                                <th colspan="5" class="text-end p-0 m-0">Net Account Balance</th>
                                                 <th class="text-end p-0 m-0">
                                                     {{ number_format(spotBalance($sale->customerID, $sale->refID), 2) }}
                                                 </th>

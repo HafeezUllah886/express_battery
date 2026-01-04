@@ -25,6 +25,7 @@
                             <th>Code</th>
                             <th>Name</th>
                             <th>Category</th>
+                            <th>Weight</th>
                             <th>Retail Price</th>
                             <th>Sale Percentage</th>
                             <th>Extra Tax</th>
@@ -37,6 +38,7 @@
                                     <td>{{ $item->code }}</td>
                                     <td>{{ $item->name }}</td>
                                     <td>{{ $item->category->name }}</td>
+                                    <td>{{ number_format($item->weight, 2) }} Kg</td>
                                     <td>{{ number_format($item->price, 2) }}</td>
                                     <td>{{ number_format($item->sale_percentage, 2) }}</td>
                                     <td>{{ number_format($item->extra_tax, 2) }}</td>
@@ -81,6 +83,12 @@
                                                                 </option>
                                                             @endforeach
                                                         </select>
+                                                    </div>
+                                                    <div class="form-group mt-2">
+                                                        <label for="weight">Weight (Kgs)</label>
+                                                        <input type="number" step="any" name="weight" required
+                                                            value="{{ $item->weight }}" min="0" id="weight"
+                                                            class="form-control">
                                                     </div>
                                                     <div class="form-group mt-2">
                                                         <label for="price">Retail Price</label>
@@ -153,6 +161,11 @@
                                     <option value="{{ $cat->id }}">{{ $cat->name }}</option>
                                 @endforeach
                             </select>
+                        </div>
+                        <div class="form-group mt-2">
+                            <label for="weight">Weight (Kgs)</label>
+                            <input type="number" step="any" name="weight" required value="" min="0"
+                                id="weight" class="form-control">
                         </div>
                         <div class="form-group mt-2">
                             <label for="price">Retail Price</label>

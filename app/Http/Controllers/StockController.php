@@ -20,9 +20,21 @@ class StockController extends Controller
         $products = products::all();
         foreach($products as $product)
         {
-            $purchased = purchase_details::where('productID', $product->id)->sum('qty');
-            $sold = sale_details::where('productID', $product->id)->sum('qty');
-            $product->stock = $purchased - $sold;
+           $stock = 0;
+           $stock_value = 0;
+           $purchases = purchase_details::where('productID', $product->id)->get();
+          foreach($purchases as $purchase)
+          {
+            $sales = sale_details::where('purchase_id', $purchase->id)->sum('qty');
+            $purchase_stock = $purchase->qty - $sales;
+            if($purchase_stock > 0)
+            {
+                $stock += $purchase_stock;
+                $stock_value += $purchase_stock * $purchase->pprice;
+            }
+          }
+          $product->stock = $stock;
+          $product->stock_value = $stock_value;
         }
         return view('stock.index', compact('products'));
     }

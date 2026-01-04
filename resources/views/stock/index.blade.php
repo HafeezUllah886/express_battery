@@ -13,6 +13,7 @@
                             <th>Product</th>
                             <th>Category</th>
                             <th>Stock</th>
+                            <th>Stock Value</th>
                             {{-- <th>Action</th> --}}
                         </thead>
                         <tbody>
@@ -22,6 +23,7 @@
                                     <td>{{ $product->name }}</td>
                                     <td>{{ $product->category->name }}</td>
                                     <td>{{ number_format($product->stock, 2) }}</td>
+                                    <td>{{ number_format($product->stock_value, 2) }}</td>
                                     {{-- <td>
                                         <button class="btn btn-info" onclick="ViewDetails({{ $product->id }})">
                                             Details
@@ -30,6 +32,13 @@
                                 </tr>
                             @endforeach
                         </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="3" class="text-end">Total</td>
+                                <td>{{ number_format($products->sum('stock'), 2) }}</td>
+                                <td>{{ number_format($products->sum('stock_value'), 2) }}</td>
+                            </tr>
+                        </tfoot>
                     </table>
                 </div>
             </div>
