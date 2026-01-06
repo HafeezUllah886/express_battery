@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\accounts;
 use App\Models\categories;
 use App\Models\products;
 use App\Models\units;
@@ -16,7 +17,8 @@ class ProductsController extends Controller
     {
         $items = products::with('category', 'unit')->paginate(1000);
         $cats = categories::orderBy('name', 'asc')->get();
-        return view('products.product', compact('items', 'cats'));
+        $vendors = accounts::vendor()->get();
+        return view('products.product', compact('items', 'cats', 'vendors'));
     }
 
     /**
@@ -120,5 +122,27 @@ class ProductsController extends Controller
         }
 
         return "C$value";
+    }
+
+    public function price_list()
+    {
+        $vendors = accounts::vendor()->get();
+        return view('products.price_list.index', compact('vendors'));
+    }
+
+    public function price_list_details(Request $request)
+    {
+        $vendor = $request->vendor;
+        $start = $request->from;
+        $end = $request->to;
+
+        $products = products::query();
+        if($vendor != "All")
+        {
+           $vendor = accounts::find($vendor);
+           $products->where('vendor', $vendor->title);
+        }
+        $products = $products->get();
+        return view('products.price_list.details', compact('products', 'start', 'end'));
     }
 }

@@ -3546,6 +3546,7 @@ namespace App\Models {
     /**
      * App\Models\products
      *
+     * @property float $weight
      * @property \Illuminate\Support\Carbon|null $updated_at
      * @property \Illuminate\Support\Carbon|null $created_at
      * @property float $extra_tax
@@ -3568,6 +3569,7 @@ namespace App\Models {
      * @method static \Illuminate\Database\Eloquent\Builder<products>|products whereExtraTax($value)
      * @method static \Illuminate\Database\Eloquent\Builder<products>|products whereCreatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<products>|products whereUpdatedAt($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<products>|products whereWeight($value)
      * @method static \Illuminate\Database\Eloquent\Builder<products>|products newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<products>|products newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<products>|products query()

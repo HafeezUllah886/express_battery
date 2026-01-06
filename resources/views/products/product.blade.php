@@ -24,6 +24,8 @@
                             <th>#</th>
                             <th>Code</th>
                             <th>Name</th>
+                            <th>Vendor</th>
+                            <th>Plates</th>
                             <th>Category</th>
                             <th>Weight</th>
                             <th>Retail Price</th>
@@ -37,6 +39,8 @@
                                     <td>{{ $key + 1 }}</td>
                                     <td>{{ $item->code }}</td>
                                     <td>{{ $item->name }}</td>
+                                    <td>{{ $item->vendor }}</td>
+                                    <td>{{ $item->plates }}</td>
                                     <td>{{ $item->category->name }}</td>
                                     <td>{{ number_format($item->weight, 2) }} Kg</td>
                                     <td>{{ number_format($item->price, 2) }}</td>
@@ -73,6 +77,21 @@
                                                         <input type="text" name="name" required
                                                             value="{{ $item->name }}" id="name"
                                                             class="form-control">
+                                                    </div>
+                                                    <div class="form-group mt-2">
+                                                        <label for="vendor">Vendor</label>
+                                                        <select name="vendor" id="vendor" class="form-control">
+                                                            @foreach ($vendors as $vendor)
+                                                                <option value="{{ $vendor->title }}"
+                                                                    @selected($vendor->title == $item->vendor)>{{ $vendor->title }}
+                                                                </option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group mt-2">
+                                                        <label for="plates">Plates</label>
+                                                        <input type="number" name="plates" value="{{ $item->plates }}"
+                                                            id="plates" class="form-control">
                                                     </div>
                                                     <div class="form-group mt-2">
                                                         <label for="catID">Category</label>
@@ -153,6 +172,20 @@
                         <div class="form-group mt-2">
                             <label for="name">Name</label>
                             <input type="text" name="name" required id="name" class="form-control">
+                        </div>
+                        <div class="form-group mt-2">
+                            <label for="vendor">Vendor</label>
+                            <select name="vendor" id="vendor" class="form-control">
+                                @foreach ($vendors as $vendor)
+                                    <option value="{{ $vendor->title }}" @selected($vendor->title)>
+                                        {{ $vendor->title }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group mt-2">
+                            <label for="plates">Plates</label>
+                            <input type="number" name="plates" id="plates" class="form-control">
                         </div>
                         <div class="form-group mt-2">
                             <label for="catID">Category</label>

@@ -153,6 +153,10 @@
                                     data-key="t-chat">Products
                                     Categories </a>
                             </li>
+                            <li class="nav-item">
+                                <a href="{{ route('product.price_list') }}" class="nav-link" data-key="t-chat">Price
+                                    List</a>
+                            </li>
                             {{--  <li class="nav-item">
                                 <a href="{{ route('units.index') }}" class="nav-link" data-key="t-chat"> Units </a>
                             </li> --}}
