@@ -327,6 +327,7 @@ namespace App\Models {
      * @method static \Illuminate\Database\Eloquent\Builder<accounts>|accounts customer()
      * @method static \Illuminate\Database\Eloquent\Builder<accounts>|accounts vendor()
      * @method static \Illuminate\Database\Eloquent\Builder<accounts>|accounts customerVendor()
+     * @method static \Illuminate\Database\Eloquent\Builder<accounts>|accounts businessVendor()
      * @method static mixed select($columns)
      * @method static mixed selectSub($query, $as)
      * @method static mixed selectRaw($expression, array $bindings)
@@ -3546,6 +3547,8 @@ namespace App\Models {
     /**
      * App\Models\products
      *
+     * @property int|null $plates
+     * @property string|null $vendor
      * @property float $weight
      * @property \Illuminate\Support\Carbon|null $updated_at
      * @property \Illuminate\Support\Carbon|null $created_at
@@ -3570,6 +3573,8 @@ namespace App\Models {
      * @method static \Illuminate\Database\Eloquent\Builder<products>|products whereCreatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<products>|products whereUpdatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<products>|products whereWeight($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<products>|products whereVendor($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<products>|products wherePlates($value)
      * @method static \Illuminate\Database\Eloquent\Builder<products>|products newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<products>|products newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<products>|products query()
@@ -5047,7 +5052,10 @@ namespace App\Models {
      * @property \Illuminate\Support\Carbon|null $created_at
      * @property float $amount
      * @property float $qty
-     * @property float $price
+     * @property mixed $price
+     * @property mixed $extra_tax
+     * @property mixed $sale_percentage
+     * @property mixed $retail
      * @property int $productID
      * @property int $quotID
      * @property int $id
@@ -5055,6 +5063,9 @@ namespace App\Models {
      * @method static \Illuminate\Database\Eloquent\Builder<quotationDetails>|quotationDetails whereId($value)
      * @method static \Illuminate\Database\Eloquent\Builder<quotationDetails>|quotationDetails whereQuotid($value)
      * @method static \Illuminate\Database\Eloquent\Builder<quotationDetails>|quotationDetails whereProductid($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<quotationDetails>|quotationDetails whereRetail($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<quotationDetails>|quotationDetails whereSalePercentage($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<quotationDetails>|quotationDetails whereExtraTax($value)
      * @method static \Illuminate\Database\Eloquent\Builder<quotationDetails>|quotationDetails wherePrice($value)
      * @method static \Illuminate\Database\Eloquent\Builder<quotationDetails>|quotationDetails whereQty($value)
      * @method static \Illuminate\Database\Eloquent\Builder<quotationDetails>|quotationDetails whereAmount($value)

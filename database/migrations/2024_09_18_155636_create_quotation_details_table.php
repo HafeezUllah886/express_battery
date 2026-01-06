@@ -15,7 +15,10 @@ return new class extends Migration
             $table->id();
             $table->foreignId('quotID')->constrained('quotations', 'id');
             $table->foreignId('productID')->constrained('products', 'id');
-            $table->float('price');
+            $table->float('retail', 10);
+            $table->float('sale_percentage', 10);
+            $table->float('extra_tax', 10);
+            $table->float('price', 10);
             $table->float('qty');
             $table->float('amount');
             $table->timestamps();

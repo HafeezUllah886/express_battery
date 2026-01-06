@@ -22,7 +22,13 @@
                             <th>Action</th>
                         </thead>
                         <tbody>
+                            @php
+                                $total = 0;
+                            @endphp
                             @foreach ($accounts as $key => $account)
+                                @php
+                                    $total += getAccountBalance($account->id);
+                                @endphp
                                 <tr>
                                     <td>{{ $key + 1 }}</td>
                                     <td>{{ $account->title }}</td>
@@ -49,7 +55,8 @@
                                                     </button>
                                                 </li>
                                                 <li>
-                                                    <a class="dropdown-item" href="{{route('account.edit', $account->id)}}">
+                                                    <a class="dropdown-item"
+                                                        href="{{ route('account.edit', $account->id) }}">
                                                         <i class="ri-pencil-fill align-bottom me-2 text-muted"></i>
                                                         Edits
                                                     </a>
@@ -62,13 +69,21 @@
                                 </tr>
                             @endforeach
                         </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="{{ $filter == 'Business' ? 3 : 4 }}">Total</td>
+                                <td>{{ number_format($total) }}</td>
+                                <td></td>
+                            </tr>
+                        </tfoot>
                     </table>
                 </div>
             </div>
         </div>
     </div>
 
-    <div id="viewStatmentModal" class="modal fade" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+    <div id="viewStatmentModal" class="modal fade" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true"
+        style="display: none;">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -76,24 +91,28 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"> </button>
                 </div>
                 <form method="get" target="" id="form">
-                  @csrf
-                  <input type="hidden" name="accountID" id="accountID">
-                         <div class="modal-body">
-                           <div class="form-group">
+                    @csrf
+                    <input type="hidden" name="accountID" id="accountID">
+                    <div class="modal-body">
+                        <div class="form-group">
                             <label for="">Select Dates</label>
                             <div class="input-group">
                                 <span class="input-group-text" id="inputGroup-sizing-default">From</span>
-                                <input type="date" id="from" name="from" value="{{ firstDayOfMonth() }}" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                                <input type="date" id="from" name="from" value="{{ firstDayOfMonth() }}"
+                                    class="form-control" aria-label="Sizing example input"
+                                    aria-describedby="inputGroup-sizing-default">
                                 <span class="input-group-text" id="inputGroup-sizing-default">To</span>
-                                <input type="date" id="to" name="to" value="{{ lastDayOfMonth() }}" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                                <input type="date" id="to" name="to" value="{{ lastDayOfMonth() }}"
+                                    class="form-control" aria-label="Sizing example input"
+                                    aria-describedby="inputGroup-sizing-default">
                             </div>
-                           </div>
-                         </div>
-                         <div class="modal-footer">
-                                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                                <button type="button" id="viewBtn" class="btn btn-primary">View</button>
-                         </div>
-                  </form>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                        <button type="button" id="viewBtn" class="btn btn-primary">View</button>
+                    </div>
+                </form>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
@@ -120,20 +139,19 @@
     <script src="{{ asset('assets/js/pages/datatables.init.js') }}"></script>
 
     <script>
-        function ViewStatment(account)
-        {
+        function ViewStatment(account) {
             $("#accountID").val(account);
             $("#viewStatmentModal").modal('show');
         }
 
-        $("#viewBtn").on("click", function (){
+        $("#viewBtn").on("click", function() {
             var accountID = $("#accountID").val();
             var from = $("#from").val();
             var to = $("#to").val();
             var url = "{{ route('accountStatement', ['id' => ':accountID', 'from' => ':from', 'to' => ':to']) }}"
-        .replace(':accountID', accountID)
-        .replace(':from', from)
-        .replace(':to', to);
+                .replace(':accountID', accountID)
+                .replace(':from', from)
+                .replace(':to', to);
             window.open(url, "_blank", "width=1000,height=800");
         });
     </script>

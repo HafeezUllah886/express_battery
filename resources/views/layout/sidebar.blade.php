@@ -120,6 +120,25 @@
                     </li>
                 @endif
                 <li class="nav-item">
+                    <a class="nav-link menu-link" href="#quotation" data-bs-toggle="collapse" role="button"
+                        aria-expanded="false" aria-controls="sidebarApps">
+                        <i class="ri-shopping-cart-line"></i><span data-key="t-apps">Quotation</span>
+                    </a>
+                    <div class="collapse menu-dropdown" id="quotation">
+                        <ul class="nav nav-sm flex-column">
+                            <li class="nav-item">
+                                <a onclick="newWindow('{{ route('quotation.create') }}')" class="nav-link"
+                                    data-key="t-chat">Create Quotation</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('quotation.index') }}" class="nav-link" data-key="t-chat">
+                                    Quotation
+                                    History </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link menu-link" href="#stock" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarApps">
                         <i class="ri-stack-line"></i><span data-key="t-apps">Stocks</span>

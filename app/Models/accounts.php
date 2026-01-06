@@ -32,6 +32,11 @@ class accounts extends Model
         return $query->where('type', 'Customer')
             ->orWhere('type', 'Vendor');
     }
+    public function scopeBusinessVendor($query)
+    {
+        return $query->where('type', 'Business')
+            ->orWhere('type', 'Vendor');
+    }
 
     public function transactions()
     {

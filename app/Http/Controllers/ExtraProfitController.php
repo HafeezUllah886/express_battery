@@ -14,7 +14,7 @@ class ExtraProfitController extends Controller
      public function index()
     {
         $extra_profits = extraProfit::orderBy('id', 'desc')->get();
-        $accounts = accounts::Business()->get();
+        $accounts = accounts::businessVendor()->get();
 
         return view('Finance.extra_profit.index', compact('extra_profits', 'accounts'));
     }
