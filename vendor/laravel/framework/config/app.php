@@ -93,19 +93,18 @@ return [
         'quettamart.diamondquetta.com',
         'testyaseen.diamondquetta.com',
         'yaseen.run',
-        '127.0.0.1:8000'
+        '127.0.0.1:8000',
     ],
 
     'databases' => [
         'battery_new',
         'test',
-        'u788011464_quettamart'
+        'u788011464_quettamart',
     ],
 
-    'files' =>
-    [
+    'files' => [
         '551196',
-        '551196'
+        '551196',
     ],
 
     /*
