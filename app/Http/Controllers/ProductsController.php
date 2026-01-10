@@ -135,13 +135,19 @@ class ProductsController extends Controller
         $start = $from;
         $end = $to;
 
-        $products = products::orderBy('name', 'asc');
-        if($vendor != "All")
-        {
-           $vendor = accounts::find($vendor);
-           $products->where('vendor', $vendor->title);
-        }
-        $products = $products->get();
+       $productsQuery = products::query();
+
+// 2. Filter by vendor if necessary
+if ($vendor != "All") {
+    $vendorData = accounts::find($vendor);
+    $productsQuery->where('vendor', $vendorData->title);
+}
+
+// 3. Fetch the data from the database
+$products = $productsQuery->get();
+
+// 4. Sort the Collection in memory using Natural Sorting
+$products = $products->sortBy('name', SORT_NATURAL | SORT_FLAG_CASE)->values();
         return view('products.price_list.details', compact('products', 'start', 'end'));
     }
 }
