@@ -26,5 +26,10 @@ class sales extends Model
         return $this->hasMany(sale_payments::class, 'salesID');
     }
 
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'userID');
+    }
+
 
 }

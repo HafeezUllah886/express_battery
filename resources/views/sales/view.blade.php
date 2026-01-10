@@ -25,11 +25,11 @@
                         </div>
                         <div class="card-body p-4">
                             <div class="row g-3">
-                                <div class="col-3">
+                                <div class="col-2">
                                     <p class="text-muted mb-2 text-uppercase fw-semibold">Inv #</p>
                                     <h5 class="fs-14 mb-0">{{ $sale->id }}</h5>
                                 </div>
-                                <div class="col-6">
+                                <div class="col-4">
                                     <p class="text-muted mb-2 text-uppercase fw-semibold">Customer</p>
                                     <h5 class="fs-14 mb-0">{{ $sale->customer->title }}</h5>
                                     <h6 class="fs-14 mb-0">
@@ -38,6 +38,10 @@
                                 <div class="col-3">
                                     <p class="text-muted mb-2 text-uppercase fw-semibold">Date</p>
                                     <h5 class="fs-14 mb-0">{{ date('d M Y', strtotime($sale->date)) }}</h5>
+                                </div>
+                                <div class="col-3">
+                                    <p class="text-muted mb-2 text-uppercase fw-semibold">User</p>
+                                    <h5 class="fs-14 mb-0">{{ $sale->user->name }}</h5>
                                 </div>
                                 <!--end col-->
                                 <!--end col-->

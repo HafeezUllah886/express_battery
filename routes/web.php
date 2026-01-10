@@ -34,7 +34,7 @@ Route::middleware('auth')->group(function () {
     Route::get("product/generateCode", [ProductsController::class, "generateCode"])->name('product.generatecode');
     Route::get("product/printbarcode/{id}", [ProductsController::class, "barcodePrint"])->name('product.barcodePrint');
     Route::get("product/pricelist", [ProductsController::class, "price_list"])->name('product.price_list');
-    Route::get("product/pricelist/details", [ProductsController::class, "price_list_details"])->name('product.price_list.details');
+    Route::get("product/pricelist/details/{vendor}/{from}/{to}", [ProductsController::class, "price_list_details"])->name('product.price_list.details');
     Route::resource('product', ProductsController::class);
 
     Route::get('/productAjax', [ProductsController::class, 'ajaxCreate']);

@@ -105,6 +105,7 @@ class SalesController extends Controller
                   'payment'         => $request->paid,
                   'customerName'    => $request->customerName,
                   'refID'           => $ref,
+                  'userID'          => auth()->user()->id,
                 ]
             );
 

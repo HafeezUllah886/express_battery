@@ -130,13 +130,12 @@ class ProductsController extends Controller
         return view('products.price_list.index', compact('vendors'));
     }
 
-    public function price_list_details(Request $request)
+    public function price_list_details($vendor, $from, $to)
     {
-        $vendor = $request->vendor;
-        $start = $request->from;
-        $end = $request->to;
+        $start = $from;
+        $end = $to;
 
-        $products = products::query();
+        $products = products::orderBy('name', 'asc');
         if($vendor != "All")
         {
            $vendor = accounts::find($vendor);
