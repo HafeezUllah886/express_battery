@@ -135,7 +135,9 @@
                             @if ($sale->notes != '')
                                 <p><strong>Notes: </strong>{{ $sale->notes }}</p>
                             @endif
-                            <p class="text-center urdu"><strong></strong></p>
+                            <p class="text-center urdu"><strong>نوٹ: برائے مہربانی مال اور ورنٹی کے مطابق پورا چیک کر لیں۔
+                                    بعد میں کوئی کلیم نہ ہوگا۔ ورنٹی کمپنی کی پالیسی کے مطابق ہوگا۔ کمپنی سے ریجیکٹ ہونے پر
+                                    ہماری کوئی ذمہ داری نہ ہوگی۔</strong></p>
 
                         </div>
                         <!--end card-body-->
