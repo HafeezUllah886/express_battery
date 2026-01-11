@@ -44,7 +44,8 @@ class PurchaseController extends Controller
         $vendors = accounts::customerVendor()->get();
         $accounts = accounts::business()->get();
         $cats = categories::orderBy('name', 'asc')->get();
-        return view('purchase.create', compact('products', 'vendors', 'accounts', 'cats'));
+        $warehouses = warehouses::all();
+        return view('purchase.create', compact('products', 'vendors', 'accounts', 'cats', 'warehouses'));
     }
 
     /**
@@ -97,6 +98,7 @@ class PurchaseController extends Controller
                         'qty'           => $qty,
                         'amount'        => $amount,
                         'date'          => $request->date,
+                        'warehouseID'   => $request->warehouseID,
                         'refID'         => $ref,
                     ]
                 );
@@ -193,8 +195,9 @@ class PurchaseController extends Controller
         $vendors = accounts::customerVendor()->get();
         $accounts = accounts::business()->get();
         $cats = categories::orderBy('name', 'asc')->get();
+        $warehouses = warehouses::all();
 
-        return view('purchase.edit', compact('products', 'vendors', 'accounts', 'purchase', 'cats'));
+        return view('purchase.edit', compact('products', 'vendors', 'accounts', 'purchase', 'cats', 'warehouses'));
     }
 
     /**
@@ -256,6 +259,7 @@ class PurchaseController extends Controller
                         'pprice'        => $pprice,
                         'qty'           => $qty,
                         'amount'        => $amount,
+                        'warehouseID'   => $request->warehouseID,
                         'date'          => $request->date,
                         'refID'         => $ref,
                     ]

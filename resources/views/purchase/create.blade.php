@@ -125,6 +125,17 @@
                                     <input type="file" class="form-control" name="file">
                                 </div>
                             </div>
+                            <div class="col-2">
+                                <div class="form-group">
+                                    <label for="warehouse">Warehouse</label>
+                                    <select name="warehouseID" id="warehouseID"required class="form-control">
+                                        <option value="">Select Warehouse</option>
+                                        @foreach ($warehouses as $warehouse)
+                                            <option value="{{ $warehouse->id }}">{{ $warehouse->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
                             <div class="col-12 mt-2">
                                 <div class="form-group">
                                     <label for="notes">Notes</label>

@@ -4152,6 +4152,7 @@ namespace App\Models {
     /**
      * App\Models\purchase_details
      *
+     * @property int $warehouseID
      * @property \Illuminate\Support\Carbon|null $updated_at
      * @property \Illuminate\Support\Carbon|null $created_at
      * @property string $status
@@ -4180,6 +4181,7 @@ namespace App\Models {
      * @method static \Illuminate\Database\Eloquent\Builder<purchase_details>|purchase_details whereStatus($value)
      * @method static \Illuminate\Database\Eloquent\Builder<purchase_details>|purchase_details whereCreatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<purchase_details>|purchase_details whereUpdatedAt($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<purchase_details>|purchase_details whereWarehouseid($value)
      * @method static \Illuminate\Database\Eloquent\Builder<purchase_details>|purchase_details newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<purchase_details>|purchase_details newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<purchase_details>|purchase_details query()

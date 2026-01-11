@@ -5,6 +5,18 @@
             <div class="card">
                 <div class="card-header d-flex justify-content-between">
                     <h3>Products Stock </h3>
+                    <form action="{{ route('product_stock.index', ['zero' => 'allowed']) }}" method="get">
+                        <div class="input-group">
+                            <select name="warehouse" class="form-control">
+                                <option value="all">All</option>
+                                @foreach ($warehouses as $ware)
+                                    <option value="{{ $ware->id }}" @selected($ware->id == $warehouse)>{{ $ware->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            <button type="submit" class="btn btn-primary">Filter</button>
+                        </div>
+                    </form>
                 </div>
                 <div class="card-body">
                     <table class="table" id="buttons-datatables">

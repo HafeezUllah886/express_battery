@@ -15,14 +15,23 @@ class StockController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+        $warehouse = $request->warehouse ?? 'all';
         $products = products::all();
         foreach($products as $product)
         {
            $stock = 0;
            $stock_value = 0;
-           $purchases = purchase_details::where('productID', $product->id)->get();
+           if($warehouse == 'all')
+           {
+             $purchases = purchase_details::where('productID', $product->id)->get();
+           }
+           else
+           {
+             $purchases = purchase_details::where('productID', $product->id)->where('warehouseID', $warehouse)->get();
+           }
+          
           foreach($purchases as $purchase)
           {
             $sales = sale_details::where('purchase_id', $purchase->id)->sum('qty');
@@ -36,7 +45,8 @@ class StockController extends Controller
           $product->stock = $stock;
           $product->stock_value = $stock_value;
         }
-        return view('stock.index', compact('products'));
+        $warehouses = warehouses::all();
+        return view('stock.index', compact('products', 'warehouse', 'warehouses'));
     }
 
     /**
